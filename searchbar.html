@@ -3,21 +3,20 @@
   <head>
     <link rel="stylesheet" type="text/css"
       href="https://fonts.googleapis.com/css?family=Open+Sans"/>
-    <style>
-      @import url('css/searchbar.css');
-    </style>
-    <script>
-    window.nodeRequire = require;
-    delete window.require;
-    delete window.exports;
-    delete window.module;
-    </script>
-    <script type="text/javascript" src="jquery.js"></script>
-    <div class="searchBarDiv">
-      <textarea id="searchText" autofocus="autofocus" rows="1" cols="40" placeholder="What would you like to find?"></textarea>
-    </div>
-    <div class="resultArea">
-      <img src="atom.png"/>
-    </div>
+    <link rel="stylesheet" type="text/css"
+      href="css/searchbar.css"/>
   </head>
+  <body>
+    <script>
+    var shell = require('shelljs');
+    var output = shell.exec('ls -a ~',{async:true}, (error, stdout, stderr) => {
+    console.log(`stdout: ${stdout}`);
+    console.log(`stderr: ${stderr}`);
+    });
+    </script>
+    <input type="text" autofocus="autofocus" rows="1" cols="100" placeholder="What would you like to find?">
+    </input>
+    <div class="resultArea">
+    </div>
+  </body>
 </html>
