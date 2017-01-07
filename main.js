@@ -7,7 +7,7 @@ let searchBar
 
 function createWindow () {
   // Create the browser window.
-  back = new BrowserWindow({width: 100, height: 500})
+  back = new BrowserWindow({show: false})
   searchBar = new BrowserWindow({
     width: 800,
     height: 50,
@@ -22,7 +22,7 @@ function createWindow () {
 
   // Open the DevTools.
   searchBar.webContents.openDevTools()
-  back.webContents.openDevTools()
+  // back.webContents.openDevTools()
 
   // Emitted when the window is closed.
   back.on('closed', () => {
