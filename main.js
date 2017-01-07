@@ -1,6 +1,4 @@
 const {electron, app, BrowserWindow, globalShortcut, dialog} = require('electron')
-const path = require('path')
-const url = require('url')
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
@@ -9,7 +7,7 @@ let searchBar
 
 function createWindow () {
   // Create the browser window.
-  back = new BrowserWindow({show: false})
+  back = new BrowserWindow({width: 100, height: 500})
   searchBar = new BrowserWindow({
     width: 800,
     height: 50,
@@ -19,22 +17,19 @@ function createWindow () {
   })
 
   // and load the index.html of the background window.
-  back.loadURL(url.format({
-    pathname: path.join(__dirname, 'index.html'),
-    protocol: 'file:',
-    slashes: true
-  }))
+  back.loadURL(`file://${__dirname}/index.html`)
   searchBar.loadURL(`file://${__dirname}/searchbar.html`)
 
   // Open the DevTools.
   searchBar.webContents.openDevTools()
+  back.webContents.openDevTools()
 
   // Emitted when the window is closed.
   back.on('closed', () => {
     // Dereference the window object, usually you would store windows
     // in an array if your app supports multi windows, this is the time
     // when you should delete the corresponding element.
-    win = null
+    back = null
   })
 }
 
