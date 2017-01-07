@@ -1,23 +1,36 @@
-const {app, BrowserWindow} = require('electron')
+const {electron, app, BrowserWindow, globalShortcut, dialog} = require('electron')
 const path = require('path')
 const url = require('url')
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
-let win
+let back
+let searchBar
 
 function createWindow () {
   // Create the browser window.
-  win = new BrowserWindow({width: 800, height: 600})
+  back = new BrowserWindow({show: false})
+  searchBar = new BrowserWindow({
+    width: 800,
+    height: 50,
+    show:false,
+    frame: false,
+    parent: back
+  })
 
-  // and load the index.html of the app.
-  win.loadURL(`file://${__dirname}/index.html`)
+  // and load the index.html of the background window.
+  back.loadURL(url.format({
+    pathname: path.join(__dirname, 'index.html'),
+    protocol: 'file:',
+    slashes: true
+  }))
+  searchBar.loadURL(`file://${__dirname}/searchbar.html`)
 
   // Open the DevTools.
-  // win.webContents.openDevTools()
+  searchBar.webContents.openDevTools()
 
   // Emitted when the window is closed.
-  win.on('closed', () => {
+  back.on('closed', () => {
     // Dereference the window object, usually you would store windows
     // in an array if your app supports multi windows, this is the time
     // when you should delete the corresponding element.
@@ -29,6 +42,26 @@ function createWindow () {
 // initialization and is ready to create browser windows.
 // Some APIs can only be used after this event occurs.
 app.on('ready', createWindow)
+
+// variable to toggle the show/hide of the search bar
+var searchBarShow = false
+
+// function to toggle the show or hide of the search bar
+var searchBarToggle = function() {
+  if (searchBarShow) {
+    searchBar.hide()
+  }
+  else {
+    searchBar.show()
+  }
+}
+
+app.on('ready', function () {
+  globalShortcut.register('CommandOrControl+Shift+Space', function () {
+    searchBarToggle(searchBarShow)
+    searchBarShow = !searchBarShow
+  })
+})
 
 // Quit when all windows are closed.
 app.on('window-all-closed', () => {
@@ -42,7 +75,7 @@ app.on('window-all-closed', () => {
 app.on('activate', () => {
   // On macOS it's common to re-create a window in the app when the
   // dock icon is clicked and there are no other windows open.
-  if (win === null) {
+  if (back === null) {
     createWindow()
   }
 })
