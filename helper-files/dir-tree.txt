@@ -1,0 +1,539 @@
+.
+└── Contents
+    ├── Info.plist
+    ├── MacOS
+    │   └── Google\ Chrome
+    ├── PkgInfo
+    ├── Resources
+    │   ├── am.lproj
+    │   │   └── InfoPlist.strings
+    │   ├── app.icns
+    │   ├── ar.lproj
+    │   │   └── InfoPlist.strings
+    │   ├── bg.lproj
+    │   │   └── InfoPlist.strings
+    │   ├── bn.lproj
+    │   │   └── InfoPlist.strings
+    │   ├── ca.lproj
+    │   │   └── InfoPlist.strings
+    │   ├── com.google.Chrome.manifest
+    │   │   └── Contents
+    │   │       └── Resources
+    │   │           ├── com.google.Chrome.manifest
+    │   │           └── en.lproj
+    │   │               └── Localizable.strings
+    │   ├── cs.lproj
+    │   │   └── InfoPlist.strings
+    │   ├── da.lproj
+    │   │   └── InfoPlist.strings
+    │   ├── de.lproj
+    │   │   └── InfoPlist.strings
+    │   ├── document.icns
+    │   ├── el.lproj
+    │   │   └── InfoPlist.strings
+    │   ├── en.lproj
+    │   │   └── InfoPlist.strings
+    │   ├── en_GB.lproj
+    │   │   └── InfoPlist.strings
+    │   ├── es.lproj
+    │   │   └── InfoPlist.strings
+    │   ├── es_419.lproj
+    │   │   └── InfoPlist.strings
+    │   ├── et.lproj
+    │   │   └── InfoPlist.strings
+    │   ├── fa.lproj
+    │   │   └── InfoPlist.strings
+    │   ├── fi.lproj
+    │   │   └── InfoPlist.strings
+    │   ├── fil.lproj
+    │   │   └── InfoPlist.strings
+    │   ├── fr.lproj
+    │   │   └── InfoPlist.strings
+    │   ├── gu.lproj
+    │   │   └── InfoPlist.strings
+    │   ├── he.lproj
+    │   │   └── InfoPlist.strings
+    │   ├── hi.lproj
+    │   │   └── InfoPlist.strings
+    │   ├── hr.lproj
+    │   │   └── InfoPlist.strings
+    │   ├── hu.lproj
+    │   │   └── InfoPlist.strings
+    │   ├── id.lproj
+    │   │   └── InfoPlist.strings
+    │   ├── it.lproj
+    │   │   └── InfoPlist.strings
+    │   ├── ja.lproj
+    │   │   └── InfoPlist.strings
+    │   ├── kn.lproj
+    │   │   └── InfoPlist.strings
+    │   ├── ko.lproj
+    │   │   └── InfoPlist.strings
+    │   ├── lt.lproj
+    │   │   └── InfoPlist.strings
+    │   ├── lv.lproj
+    │   │   └── InfoPlist.strings
+    │   ├── ml.lproj
+    │   │   └── InfoPlist.strings
+    │   ├── mr.lproj
+    │   │   └── InfoPlist.strings
+    │   ├── ms.lproj
+    │   │   └── InfoPlist.strings
+    │   ├── nb.lproj
+    │   │   └── InfoPlist.strings
+    │   ├── nl.lproj
+    │   │   └── InfoPlist.strings
+    │   ├── pl.lproj
+    │   │   └── InfoPlist.strings
+    │   ├── pt_BR.lproj
+    │   │   └── InfoPlist.strings
+    │   ├── pt_PT.lproj
+    │   │   └── InfoPlist.strings
+    │   ├── ro.lproj
+    │   │   └── InfoPlist.strings
+    │   ├── ru.lproj
+    │   │   └── InfoPlist.strings
+    │   ├── scripting.sdef
+    │   ├── sk.lproj
+    │   │   └── InfoPlist.strings
+    │   ├── sl.lproj
+    │   │   └── InfoPlist.strings
+    │   ├── sr.lproj
+    │   │   └── InfoPlist.strings
+    │   ├── sv.lproj
+    │   │   └── InfoPlist.strings
+    │   ├── sw.lproj
+    │   │   └── InfoPlist.strings
+    │   ├── ta.lproj
+    │   │   └── InfoPlist.strings
+    │   ├── te.lproj
+    │   │   └── InfoPlist.strings
+    │   ├── th.lproj
+    │   │   └── InfoPlist.strings
+    │   ├── tr.lproj
+    │   │   └── InfoPlist.strings
+    │   ├── uk.lproj
+    │   │   └── InfoPlist.strings
+    │   ├── vi.lproj
+    │   │   └── InfoPlist.strings
+    │   ├── zh_CN.lproj
+    │   │   └── InfoPlist.strings
+    │   └── zh_TW.lproj
+    │       └── InfoPlist.strings
+    ├── Versions
+    │   ├── 54.0.2840.98
+    │   │   ├── Google\ Chrome\ Framework.framework
+    │   │   │   ├── Default\ Apps
+    │   │   │   │   ├── docs.crx
+    │   │   │   │   ├── drive.crx
+    │   │   │   │   ├── external_extensions.json
+    │   │   │   │   ├── gmail.crx
+    │   │   │   │   └── youtube.crx
+    │   │   │   ├── Frameworks
+    │   │   │   │   └── KeystoneRegistration.framework
+    │   │   │   │       ├── KeystoneRegistration
+    │   │   │   │       ├── Resources
+    │   │   │   │       │   ├── Info.plist
+    │   │   │   │       │   ├── Keystone.tbz
+    │   │   │   │       │   └── ksinstall
+    │   │   │   │       └── _CodeSignature
+    │   │   │   │           └── CodeResources
+    │   │   │   ├── Google\ Chrome\ Framework
+    │   │   │   ├── Helpers
+    │   │   │   │   └── crashpad_handler
+    │   │   │   ├── Internet\ Plug-Ins
+    │   │   │   │   └── nacl_irt_x86_64.nexe
+    │   │   │   ├── Libraries
+    │   │   │   │   └── WidevineCdm
+    │   │   │   │       ├── _platform_specific
+    │   │   │   │       │   └── mac_x64
+    │   │   │   │       │       ├── libwidevinecdm.dylib
+    │   │   │   │       │       └── widevinecdmadapter.plugin
+    │   │   │   │       └── manifest.json
+    │   │   │   ├── Resources
+    │   │   │   │   ├── AppMenu.nib
+    │   │   │   │   ├── AvatarMenuItem.nib
+    │   │   │   │   ├── BookmarkAllTabs.nib
+    │   │   │   │   ├── BookmarkBar.nib
+    │   │   │   │   ├── BookmarkBarFolderWindow.nib
+    │   │   │   │   ├── BookmarkBubble.nib
+    │   │   │   │   ├── BookmarkEditor.nib
+    │   │   │   │   ├── BookmarkNameFolder.nib
+    │   │   │   │   ├── CollectedCookies.nib
+    │   │   │   │   ├── ContentBlockedCookies.nib
+    │   │   │   │   ├── ContentBlockedDownloads.nib
+    │   │   │   │   ├── ContentBlockedGeolocation.nib
+    │   │   │   │   ├── ContentBlockedMIDISysEx.nib
+    │   │   │   │   ├── ContentBlockedMedia.nib
+    │   │   │   │   ├── ContentBlockedMixedScript.nib
+    │   │   │   │   ├── ContentBlockedPlugins.nib
+    │   │   │   │   ├── ContentBlockedPopups.nib
+    │   │   │   │   ├── ContentBlockedSimple.nib
+    │   │   │   │   ├── ContentProtocolHandlers.nib
+    │   │   │   │   ├── ContentSubresourceFilter.nib
+    │   │   │   │   ├── CookieDetailsView.nib
+    │   │   │   │   ├── DevicePermissionsPrompt.nib
+    │   │   │   │   ├── DownloadItem.nib
+    │   │   │   │   ├── DownloadShelf.nib
+    │   │   │   │   ├── ExtensionInstallPrompt.nib
+    │   │   │   │   ├── ExtensionInstallPromptNoWarnings.nib
+    │   │   │   │   ├── ExtensionInstallPromptWebstoreData.nib
+    │   │   │   │   ├── ExtensionInstalledBubble.nib
+    │   │   │   │   ├── FindBar.nib
+    │   │   │   │   ├── FirstRunBubble.nib
+    │   │   │   │   ├── FirstRunDialog.nib
+    │   │   │   │   ├── GlobalErrorBubble.nib
+    │   │   │   │   ├── HttpAuthLoginSheet.nib
+    │   │   │   │   ├── HungRendererDialog.nib
+    │   │   │   │   ├── ImportProgressDialog.nib
+    │   │   │   │   ├── Info.plist
+    │   │   │   │   ├── InfoBar.nib
+    │   │   │   │   ├── MainMenu.nib
+    │   │   │   │   ├── OneClickSigninBubble.nib
+    │   │   │   │   ├── OneClickSigninDialog.nib
+    │   │   │   │   ├── Panel.nib
+    │   │   │   │   ├── SaveAccessoryView.nib
+    │   │   │   │   ├── TaskManager.nib
+    │   │   │   │   ├── Toolbar.nib
+    │   │   │   │   ├── am.lproj
+    │   │   │   │   │   └── locale.pak
+    │   │   │   │   ├── app_mode_loader.app
+    │   │   │   │   │   └── Contents
+    │   │   │   │   │       ├── Info.plist
+    │   │   │   │   │       ├── MacOS
+    │   │   │   │   │       │   └── app_mode_loader
+    │   │   │   │   │       └── PkgInfo
+    │   │   │   │   ├── ar.lproj
+    │   │   │   │   │   └── locale.pak
+    │   │   │   │   ├── bg.lproj
+    │   │   │   │   │   └── locale.pak
+    │   │   │   │   ├── bn.lproj
+    │   │   │   │   │   └── locale.pak
+    │   │   │   │   ├── ca.lproj
+    │   │   │   │   │   └── locale.pak
+    │   │   │   │   ├── chrome_100_percent.pak
+    │   │   │   │   ├── chrome_200_percent.pak
+    │   │   │   │   ├── cs.lproj
+    │   │   │   │   │   └── locale.pak
+    │   │   │   │   ├── da.lproj
+    │   │   │   │   │   └── locale.pak
+    │   │   │   │   ├── de.lproj
+    │   │   │   │   │   └── locale.pak
+    │   │   │   │   ├── el.lproj
+    │   │   │   │   │   └── locale.pak
+    │   │   │   │   ├── en.lproj
+    │   │   │   │   │   └── locale.pak
+    │   │   │   │   ├── en_GB.lproj
+    │   │   │   │   │   └── locale.pak
+    │   │   │   │   ├── es.lproj
+    │   │   │   │   │   └── locale.pak
+    │   │   │   │   ├── es_419.lproj
+    │   │   │   │   │   └── locale.pak
+    │   │   │   │   ├── et.lproj
+    │   │   │   │   │   └── locale.pak
+    │   │   │   │   ├── fa.lproj
+    │   │   │   │   │   └── locale.pak
+    │   │   │   │   ├── fi.lproj
+    │   │   │   │   │   └── locale.pak
+    │   │   │   │   ├── fil.lproj
+    │   │   │   │   │   └── locale.pak
+    │   │   │   │   ├── fr.lproj
+    │   │   │   │   │   └── locale.pak
+    │   │   │   │   ├── gu.lproj
+    │   │   │   │   │   └── locale.pak
+    │   │   │   │   ├── he.lproj
+    │   │   │   │   │   └── locale.pak
+    │   │   │   │   ├── hi.lproj
+    │   │   │   │   │   └── locale.pak
+    │   │   │   │   ├── hr.lproj
+    │   │   │   │   │   └── locale.pak
+    │   │   │   │   ├── hu.lproj
+    │   │   │   │   │   └── locale.pak
+    │   │   │   │   ├── icudtl.dat
+    │   │   │   │   ├── id.lproj
+    │   │   │   │   │   └── locale.pak
+    │   │   │   │   ├── install.sh
+    │   │   │   │   ├── it.lproj
+    │   │   │   │   │   └── locale.pak
+    │   │   │   │   ├── ja.lproj
+    │   │   │   │   │   └── locale.pak
+    │   │   │   │   ├── keystone_promote_postflight.sh
+    │   │   │   │   ├── keystone_promote_preflight.sh
+    │   │   │   │   ├── kn.lproj
+    │   │   │   │   │   └── locale.pak
+    │   │   │   │   ├── ko.lproj
+    │   │   │   │   │   └── locale.pak
+    │   │   │   │   ├── lt.lproj
+    │   │   │   │   │   └── locale.pak
+    │   │   │   │   ├── lv.lproj
+    │   │   │   │   │   └── locale.pak
+    │   │   │   │   ├── ml.lproj
+    │   │   │   │   │   └── locale.pak
+    │   │   │   │   ├── mr.lproj
+    │   │   │   │   │   └── locale.pak
+    │   │   │   │   ├── ms.lproj
+    │   │   │   │   │   └── locale.pak
+    │   │   │   │   ├── natives_blob.bin
+    │   │   │   │   ├── nb.lproj
+    │   │   │   │   │   └── locale.pak
+    │   │   │   │   ├── nl.lproj
+    │   │   │   │   │   └── locale.pak
+    │   │   │   │   ├── pl.lproj
+    │   │   │   │   │   └── locale.pak
+    │   │   │   │   ├── product_logo_32.png
+    │   │   │   │   ├── pt_BR.lproj
+    │   │   │   │   │   └── locale.pak
+    │   │   │   │   ├── pt_PT.lproj
+    │   │   │   │   │   └── locale.pak
+    │   │   │   │   ├── resources.pak
+    │   │   │   │   ├── ro.lproj
+    │   │   │   │   │   └── locale.pak
+    │   │   │   │   ├── ru.lproj
+    │   │   │   │   │   └── locale.pak
+    │   │   │   │   ├── sk.lproj
+    │   │   │   │   │   └── locale.pak
+    │   │   │   │   ├── sl.lproj
+    │   │   │   │   │   └── locale.pak
+    │   │   │   │   ├── snapshot_blob.bin
+    │   │   │   │   ├── sr.lproj
+    │   │   │   │   │   └── locale.pak
+    │   │   │   │   ├── sv.lproj
+    │   │   │   │   │   └── locale.pak
+    │   │   │   │   ├── sw.lproj
+    │   │   │   │   │   └── locale.pak
+    │   │   │   │   ├── ta.lproj
+    │   │   │   │   │   └── locale.pak
+    │   │   │   │   ├── te.lproj
+    │   │   │   │   │   └── locale.pak
+    │   │   │   │   ├── th.lproj
+    │   │   │   │   │   └── locale.pak
+    │   │   │   │   ├── tr.lproj
+    │   │   │   │   │   └── locale.pak
+    │   │   │   │   ├── uk.lproj
+    │   │   │   │   │   └── locale.pak
+    │   │   │   │   ├── vi.lproj
+    │   │   │   │   │   └── locale.pak
+    │   │   │   │   ├── zh_CN.lproj
+    │   │   │   │   │   └── locale.pak
+    │   │   │   │   └── zh_TW.lproj
+    │   │   │   │       └── locale.pak
+    │   │   │   └── _CodeSignature
+    │   │   │       └── CodeResources
+    │   │   └── Google\ Chrome\ Helper.app
+    │   │       └── Contents
+    │   │           ├── Info.plist
+    │   │           ├── MacOS
+    │   │           │   └── Google\ Chrome\ Helper
+    │   │           ├── PkgInfo
+    │   │           └── _CodeSignature
+    │   │               └── CodeResources
+    │   └── 55.0.2883.95
+    │       ├── Google\ Chrome\ Framework.framework
+    │       │   ├── Default\ Apps
+    │       │   │   ├── docs.crx
+    │       │   │   ├── drive.crx
+    │       │   │   ├── external_extensions.json
+    │       │   │   ├── gmail.crx
+    │       │   │   └── youtube.crx
+    │       │   ├── Frameworks
+    │       │   │   └── KeystoneRegistration.framework
+    │       │   │       ├── KeystoneRegistration
+    │       │   │       ├── Resources
+    │       │   │       │   ├── Info.plist
+    │       │   │       │   ├── Keystone.tbz
+    │       │   │       │   └── ksinstall
+    │       │   │       └── _CodeSignature
+    │       │   │           └── CodeResources
+    │       │   ├── Google\ Chrome\ Framework
+    │       │   ├── Helpers
+    │       │   │   └── crashpad_handler
+    │       │   ├── Internet\ Plug-Ins
+    │       │   │   └── nacl_irt_x86_64.nexe
+    │       │   ├── Libraries
+    │       │   │   └── WidevineCdm
+    │       │   │       ├── _platform_specific
+    │       │   │       │   └── mac_x64
+    │       │   │       │       ├── libwidevinecdm.dylib
+    │       │   │       │       └── widevinecdmadapter.plugin
+    │       │   │       └── manifest.json
+    │       │   ├── Resources
+    │       │   │   ├── AppMenu.nib
+    │       │   │   ├── AvatarMenuItem.nib
+    │       │   │   ├── BookmarkAllTabs.nib
+    │       │   │   ├── BookmarkBar.nib
+    │       │   │   ├── BookmarkBarFolderWindow.nib
+    │       │   │   ├── BookmarkBubble.nib
+    │       │   │   ├── BookmarkEditor.nib
+    │       │   │   ├── BookmarkNameFolder.nib
+    │       │   │   ├── CollectedCookies.nib
+    │       │   │   ├── ContentBlockedCookies.nib
+    │       │   │   ├── ContentBlockedDownloads.nib
+    │       │   │   ├── ContentBlockedGeolocation.nib
+    │       │   │   ├── ContentBlockedMIDISysEx.nib
+    │       │   │   ├── ContentBlockedMedia.nib
+    │       │   │   ├── ContentBlockedMixedScript.nib
+    │       │   │   ├── ContentBlockedPlugins.nib
+    │       │   │   ├── ContentBlockedPopups.nib
+    │       │   │   ├── ContentBlockedSimple.nib
+    │       │   │   ├── ContentProtocolHandlers.nib
+    │       │   │   ├── ContentSubresourceFilter.nib
+    │       │   │   ├── CookieDetailsView.nib
+    │       │   │   ├── DevicePermissionsPrompt.nib
+    │       │   │   ├── DownloadItem.nib
+    │       │   │   ├── DownloadShelf.nib
+    │       │   │   ├── ExtensionInstallPrompt.nib
+    │       │   │   ├── ExtensionInstallPromptNoWarnings.nib
+    │       │   │   ├── ExtensionInstallPromptWebstoreData.nib
+    │       │   │   ├── ExtensionInstalledBubble.nib
+    │       │   │   ├── FindBar.nib
+    │       │   │   ├── FirstRunBubble.nib
+    │       │   │   ├── FirstRunDialog.nib
+    │       │   │   ├── GlobalErrorBubble.nib
+    │       │   │   ├── HttpAuthLoginSheet.nib
+    │       │   │   ├── HungRendererDialog.nib
+    │       │   │   ├── ImportProgressDialog.nib
+    │       │   │   ├── Info.plist
+    │       │   │   ├── InfoBar.nib
+    │       │   │   ├── MainMenu.nib
+    │       │   │   ├── OneClickSigninBubble.nib
+    │       │   │   ├── OneClickSigninDialog.nib
+    │       │   │   ├── Panel.nib
+    │       │   │   ├── SaveAccessoryView.nib
+    │       │   │   ├── TaskManager.nib
+    │       │   │   ├── Toolbar.nib
+    │       │   │   ├── am.lproj
+    │       │   │   │   └── locale.pak
+    │       │   │   ├── app_mode_loader.app
+    │       │   │   │   └── Contents
+    │       │   │   │       ├── Info.plist
+    │       │   │   │       ├── MacOS
+    │       │   │   │       │   └── app_mode_loader
+    │       │   │   │       └── PkgInfo
+    │       │   │   ├── ar.lproj
+    │       │   │   │   └── locale.pak
+    │       │   │   ├── bg.lproj
+    │       │   │   │   └── locale.pak
+    │       │   │   ├── bn.lproj
+    │       │   │   │   └── locale.pak
+    │       │   │   ├── ca.lproj
+    │       │   │   │   └── locale.pak
+    │       │   │   ├── chrome_100_percent.pak
+    │       │   │   ├── chrome_200_percent.pak
+    │       │   │   ├── cs.lproj
+    │       │   │   │   └── locale.pak
+    │       │   │   ├── da.lproj
+    │       │   │   │   └── locale.pak
+    │       │   │   ├── de.lproj
+    │       │   │   │   └── locale.pak
+    │       │   │   ├── el.lproj
+    │       │   │   │   └── locale.pak
+    │       │   │   ├── en.lproj
+    │       │   │   │   └── locale.pak
+    │       │   │   ├── en_GB.lproj
+    │       │   │   │   └── locale.pak
+    │       │   │   ├── es.lproj
+    │       │   │   │   └── locale.pak
+    │       │   │   ├── es_419.lproj
+    │       │   │   │   └── locale.pak
+    │       │   │   ├── et.lproj
+    │       │   │   │   └── locale.pak
+    │       │   │   ├── fa.lproj
+    │       │   │   │   └── locale.pak
+    │       │   │   ├── fi.lproj
+    │       │   │   │   └── locale.pak
+    │       │   │   ├── fil.lproj
+    │       │   │   │   └── locale.pak
+    │       │   │   ├── fr.lproj
+    │       │   │   │   └── locale.pak
+    │       │   │   ├── gu.lproj
+    │       │   │   │   └── locale.pak
+    │       │   │   ├── he.lproj
+    │       │   │   │   └── locale.pak
+    │       │   │   ├── hi.lproj
+    │       │   │   │   └── locale.pak
+    │       │   │   ├── hr.lproj
+    │       │   │   │   └── locale.pak
+    │       │   │   ├── hu.lproj
+    │       │   │   │   └── locale.pak
+    │       │   │   ├── icudtl.dat
+    │       │   │   ├── id.lproj
+    │       │   │   │   └── locale.pak
+    │       │   │   ├── install.sh
+    │       │   │   ├── it.lproj
+    │       │   │   │   └── locale.pak
+    │       │   │   ├── ja.lproj
+    │       │   │   │   └── locale.pak
+    │       │   │   ├── keystone_promote_postflight.sh
+    │       │   │   ├── keystone_promote_preflight.sh
+    │       │   │   ├── kn.lproj
+    │       │   │   │   └── locale.pak
+    │       │   │   ├── ko.lproj
+    │       │   │   │   └── locale.pak
+    │       │   │   ├── lt.lproj
+    │       │   │   │   └── locale.pak
+    │       │   │   ├── lv.lproj
+    │       │   │   │   └── locale.pak
+    │       │   │   ├── ml.lproj
+    │       │   │   │   └── locale.pak
+    │       │   │   ├── mr.lproj
+    │       │   │   │   └── locale.pak
+    │       │   │   ├── ms.lproj
+    │       │   │   │   └── locale.pak
+    │       │   │   ├── natives_blob.bin
+    │       │   │   ├── nb.lproj
+    │       │   │   │   └── locale.pak
+    │       │   │   ├── nl.lproj
+    │       │   │   │   └── locale.pak
+    │       │   │   ├── pl.lproj
+    │       │   │   │   └── locale.pak
+    │       │   │   ├── product_logo_32.png
+    │       │   │   ├── pt_BR.lproj
+    │       │   │   │   └── locale.pak
+    │       │   │   ├── pt_PT.lproj
+    │       │   │   │   └── locale.pak
+    │       │   │   ├── resources.pak
+    │       │   │   ├── ro.lproj
+    │       │   │   │   └── locale.pak
+    │       │   │   ├── ru.lproj
+    │       │   │   │   └── locale.pak
+    │       │   │   ├── sk.lproj
+    │       │   │   │   └── locale.pak
+    │       │   │   ├── sl.lproj
+    │       │   │   │   └── locale.pak
+    │       │   │   ├── snapshot_blob.bin
+    │       │   │   ├── sr.lproj
+    │       │   │   │   └── locale.pak
+    │       │   │   ├── sv.lproj
+    │       │   │   │   └── locale.pak
+    │       │   │   ├── sw.lproj
+    │       │   │   │   └── locale.pak
+    │       │   │   ├── ta.lproj
+    │       │   │   │   └── locale.pak
+    │       │   │   ├── te.lproj
+    │       │   │   │   └── locale.pak
+    │       │   │   ├── th.lproj
+    │       │   │   │   └── locale.pak
+    │       │   │   ├── tr.lproj
+    │       │   │   │   └── locale.pak
+    │       │   │   ├── uk.lproj
+    │       │   │   │   └── locale.pak
+    │       │   │   ├── vi.lproj
+    │       │   │   │   └── locale.pak
+    │       │   │   ├── zh_CN.lproj
+    │       │   │   │   └── locale.pak
+    │       │   │   └── zh_TW.lproj
+    │       │   │       └── locale.pak
+    │       │   └── _CodeSignature
+    │       │       └── CodeResources
+    │       └── Google\ Chrome\ Helper.app
+    │           └── Contents
+    │               ├── Info.plist
+    │               ├── MacOS
+    │               │   └── Google\ Chrome\ Helper
+    │               ├── PkgInfo
+    │               └── _CodeSignature
+    │                   └── CodeResources
+    └── _CodeSignature
+        └── CodeResources
+
+212 directories, 324 files
