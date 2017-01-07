@@ -6,10 +6,16 @@
 
 #IncludeRegexTransform: 
 
-../backend/src/Utilities/btree.h
+../backend/src/Indexing/indexing.h
+glib.h
+-
 iostream
 -
+sqlite3.h
+-
 vector
+-
+cstdio
 -
 
 ../backend/src/Utilities/util.h
@@ -17,21 +23,19 @@ iostream
 -
 vector
 -
-sstream
--
 glib.h
+-
+
+/home/tashrif/Development/jeff-launcher/backend/src/Indexing/indexing.cpp
+Indexing/indexing.h
+-
+Utilities/util.h
+-
+vector
 -
 sqlite3.h
 -
-
-/home/tashrif/Development/jeff-launcher/backend/src/main.cpp
 iostream
--
-sstream
--
-Utilities/btree.h
--
-Utilities/util.h
 -
 
 /usr/include/glib-2.0/glib.h

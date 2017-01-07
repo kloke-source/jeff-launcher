@@ -1,0 +1,28 @@
+#IncludeRegexLine: ^[ 	]*#[ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+../backend/src/Indexing/indexing.h
+iostream
+-
+sqlite3.h
+-
+vector
+-
+cstdio
+-
+
+/home/tashrif/Development/jeff-launcher/backend/src/Indexing/indexing.c
+Indexing/indexing.h
+-
+vector
+-
+sqlite3.h
+-
+iostream
+-
+

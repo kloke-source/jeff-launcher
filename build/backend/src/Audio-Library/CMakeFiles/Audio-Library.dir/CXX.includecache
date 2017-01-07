@@ -1,0 +1,24 @@
+#IncludeRegexLine: ^[ 	]*#[ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+../backend/src/Audio-Library/audio-library.h
+iostream
+-
+sqlite3.h
+-
+vector
+-
+
+/home/tashrif/Development/jeff-launcher/backend/src/Audio-Library/audio-library.cpp
+iostream
+-
+sqlite3.h
+-
+Audio-Library/audio-library.h
+-
+

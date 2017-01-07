@@ -5,10 +5,10 @@
 #include <vector>
 #include <sstream>
 #include <glib.h>
+#include <sqlite3.h>
 
 class util{
  public:
-  static void scan_dir(const char *dir_location);
   static std::string replace(std::string text, std::string find_value, std::string replace_value);
   static std::string escape_string(std::string text);
   static std::string escape_spaces(std::string text);
@@ -25,5 +25,15 @@ class util{
     conv_stream << input;
     return conv_stream.str();
   }
+
+  static void initialize();
+ private:
+  static std::string get_home_dir();
+  static void create_dir(std::string dir_location);
+  static void init_db();
+  static void load_db();
+  static void scan_dir(const char *dir_location);
+  static int generic_db_callback(void *data, int total_col_num, char **value, char **fields);
+  static int  flush_to_db(sqlite3 *in_memory, const char *file_name);
 };
 #endif
