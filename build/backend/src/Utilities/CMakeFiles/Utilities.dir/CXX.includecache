@@ -1,0 +1,28 @@
+#IncludeRegexLine: ^[ 	]*#[ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+../backend/src/Utilities/util.h
+iostream
+-
+vector
+-
+sstream
+-
+
+/home/tashrif/Development/jeff-launcher/backend/src/Utilities/util.cpp
+sstream
+-
+iostream
+-
+string.h
+-
+vector
+-
+Utilities/util.h
+-
+

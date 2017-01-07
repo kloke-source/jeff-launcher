@@ -1,0 +1,20 @@
+#IncludeRegexLine: ^[ 	]*#[ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+../backend/src/Utilities/btree.h
+iostream
+-
+vector
+-
+
+/home/tashrif/Development/jeff-launcher/backend/src/main.cpp
+iostream
+-
+Utilities/btree.h
+-
+
