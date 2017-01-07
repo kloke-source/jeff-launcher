@@ -1,0 +1,1 @@
+/usr/bin/c++   -O3 -DNDEBUG   CMakeFiles/jeff-backend.dir/main.cpp.o  -o ../../../jeff-backend -rdynamic -lglib-2.0 Utilities/libUtilities.a 
