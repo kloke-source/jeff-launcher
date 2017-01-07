@@ -4,9 +4,11 @@
 #include <iostream>
 #include <vector>
 #include <sstream>
+#include <glib.h>
 
 class util{
  public:
+  static void scan_dir(const char *dir_location);
   static std::string replace(std::string text, std::string find_value, std::string replace_value);
   static std::string escape_string(std::string text);
   static std::string escape_spaces(std::string text);

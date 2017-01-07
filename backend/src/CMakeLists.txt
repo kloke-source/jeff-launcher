@@ -1,22 +1,22 @@
 find_package(PkgConfig REQUIRED)
 
-#pkg_check_modules(GTK3 REQUIRED gtk+-3.0)
+pkg_check_modules(GLIB2 REQUIRED glib-2.0)
 #pkg_check_modules(GTKMM3 REQUIRED gtkmm-3.0)
 
 
 include_directories(
-  #${GTK3_INCLUDE_DIRS}
+  ${GLIB2_INCLUDE_DIRS}
   #${GTKMM3_INCLUDE_DIRS}
   ${CMAKE_CURRENT_SOURCE_DIR}
   )
 
 link_directories(
-#  ${GTK3_LIBRARY_DIRS}
+   ${GLIB2_LIBRARY_DIRS}
 #  ${GTKMM3_LIBRARY_DIRS}
   )
 
 add_definitions(
-#  ${GTK3_CFLAGS_OTHER}
+   ${GLIB2_CFLAGS_OTHER}
 #  ${GTKMM3_CFLAGS_OTHER}
 #  ${GTKMM_DEFINITIONS}
   )
@@ -41,9 +41,10 @@ add_executable(jeff-backend
 target_compile_features(jeff-backend PRIVATE cxx_range_for)
 
 target_link_libraries(jeff-backend
+  ${GLIB2_LIBRARIES}
   Utilities
   )
-  #${GTK3_LIBRARIES}
+
   #${GTKMM3_LIBRARIES}
 
 #  GUI

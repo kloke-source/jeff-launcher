@@ -6,5 +6,5 @@ CXX_FLAGS = -O3 -DNDEBUG   -std=gnu++11
 
 CXX_DEFINES = 
 
-CXX_INCLUDES = -I/home/tashrif/Development/jeff-launcher/backend/src 
+CXX_INCLUDES = -I/usr/include/glib-2.0 -I/usr/lib/glib-2.0/include -I/home/tashrif/Development/jeff-launcher/backend/src 
 
