@@ -1,54 +1,22 @@
-#include <sstream>
-#include <iostream>
-#include <string.h>
-#include <vector>
+#include <Indexing/indexing.h>
 #include <Utilities/util.h>
+#include <vector>
 #include <sqlite3.h>
+#include <iostream>
 
-namespace {
-  std::vector<std::string> subdir_locations;
-  std::vector<std::string> file_locations;
-  int total_files=0;
-  int subdir_count=0;
 
-  bool db_initialized=false;
-  bool db_loaded=false;
-  bool db_opened=false;
+std::vector<std::string> subdir_locations;
+std::vector<std::string> file_locations;
+sqlite3 *index_db;
+int total_files=0;
+int subdir_count=0;
+std::string default_db_location;
 
-  std::string default_db_location;
+bool db_loaded=false;
+bool db_initialized=false;
 
-  sqlite3 *index_db;
-};
 
-std::string util::get_home_dir()
-{
-  const char* home_dir = getenv("HOME");
-  return util::to_string(home_dir);
-}
-
-void util::create_dir(std::string dir_location)
-{
-  std::string dir_cmd = "mkdir -pv " + dir_location;
-#if defined(_WIN32)
-  _mkdir(dir_location.c_str());
-#else
-  system(dir_cmd.c_str());
-#endif
-}
-
-void util::initialize()
-{
-  util::create_dir(util::get_home_dir() + "/.jeff-launcher");
-  util::create_dir(util::get_home_dir() + "/.jeff-launcher/AppIcons");
-  util::create_dir(util::get_home_dir() + "/.jeff-launcher/DatabaseIndex");
-
-  default_db_location = util::get_home_dir() + "/.jeff-launcher/DatabaseIndex/index.db";
-
-  util::init_db();
-  util::flush_to_db(index_db, default_db_location.c_str());
-}
-
-void util::init_db()
+void Indexing::init_db()
 {
   if (db_initialized == false) {
     db_initialized = true;
@@ -83,8 +51,9 @@ void util::init_db()
   }
 }
 
-void util::load_db()
+void Indexing::load_db()
 {
+  Indexing::initialize();
   if (db_loaded == false) {
     int ret_code;
     sqlite3 *in_memory = index_db;
@@ -112,12 +81,11 @@ void util::load_db()
     /* Close the database connection opened on database file default_db_location.c_str()
     ** and return the result of this function. */
     (void)sqlite3_close(source_file);
-
     db_loaded = true;
   }
 }
 
-void util::scan_dir(const char *dir_location){
+void Indexing::scan_dir(const char *dir_location){
 
   subdir_locations.push_back(dir_location);
 
@@ -129,7 +97,6 @@ void util::scan_dir(const char *dir_location){
     GError *error = NULL;
     GError *subdir_error = NULL;
 
-    std::stringstream test;
     const char *file;
     GDir *dir = g_dir_open(subdir_locations[subdir_iter].c_str(), 0, &error);
 
@@ -163,10 +130,10 @@ void util::scan_dir(const char *dir_location){
   }
   std::cout << "No. of Files : " << total_files << std::endl;
   std::cout << "No. of Subdirectories : " << subdir_count << std::endl;
-  //sqlite3 *library_db = library_db;
+  //sqlite3 *index_db = index_db;
 }
 
-int util::generic_db_callback(void *data, int total_col_num, char **value, char **fields)
+int AudioLibrary::generic_db_callback(void *data, int total_col_num, char **value, char **fields)
 {
   for(int iter = 0; iter < total_col_num; iter++){
     printf("%s = %s\n", fields[iter], value[iter] ? value[iter] : "NULL");
@@ -175,7 +142,7 @@ int util::generic_db_callback(void *data, int total_col_num, char **value, char 
   return 0;
 }
 
-int util::flush_to_db(sqlite3 *in_memory, const char *file_name) {
+int Indexing::flush_to_db {
   int ret_code;
   sqlite3 *destination_file;           // Database connection opened on file_name
   sqlite3_backup *backup_obj;  // Backup object used to copy data
@@ -202,63 +169,3 @@ int util::flush_to_db(sqlite3 *in_memory, const char *file_name) {
   (void)sqlite3_close(destination_file);
   return ret_code;
 }
-
-std::string util::replace(std::string text, std::string find_value, std::string replace_value)
-{
-  std::stringstream replaced_text;
-  for (size_t iter = 0; iter < text.size(); iter++){
-    if (text[iter] != *util::to_char(find_value))
-      replaced_text << text[iter];
-    else
-      replaced_text << replace_value;
-  }
-  return replaced_text.str();
-}
-
-std::string util::escape_string(std::string text)
-{
-  text = util::replace(text, "'", "''");
-  return text;
-}
-
-std::string util::escape_spaces(std::string text)
-{
-  text = util::replace(text, " ", "\\ ");
-  return text;
-}
-
-std::string util::escape_slashes(std::string text)
-{
-  text = util::replace(text, "/", "-");
-  return text;
-}
-
-bool util::has_text(std::string base_string, std::string search_value)
-{
-  if (base_string.find(search_value) != std::string::npos)
-    return true;
-  else
-    return false;
-}
-
-bool util::check_file_format(std::string file, std::string file_format)
-{
-  if (file.substr(file.find_last_of(".") + 1) == file_format)
-    return true;
-  else return false;
-}
-
-char* util::to_char(std::string string_value)
-{
-  std::string conv_string_value = (std::string) string_value;
-  char *char_value = new char[conv_string_value.size() + 1];
-  memcpy(char_value, conv_string_value.c_str(), conv_string_value.size() + 1);
-  return char_value;
-}
-
-int util::to_int(std::string text)
-{
-  int value = atoi(text.c_str());
-  return value;
-}
-
