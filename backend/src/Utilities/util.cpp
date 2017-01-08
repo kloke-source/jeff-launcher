@@ -5,11 +5,17 @@
 #include <Utilities/util.h>
 #include <sqlite3.h>
 
+enum {
+  LINUX_PLAT,
+  MAC_PLAT
+};
+
 namespace {
   std::vector<std::string> subdir_locations;
   std::vector<std::string> file_locations;
   int total_files=0;
   int subdir_count=0;
+  int OS_TYPE;
 
   bool db_initialized=false;
   bool db_loaded=false;
@@ -19,6 +25,23 @@ namespace {
 
   sqlite3 *index_db;
 };
+
+void util::set_os_plat()
+{
+#ifdef __APPLE__
+#include "TargetConditionals.h"
+#if TARGET_OS_MAC
+  OS_TYPE = MAC_PLAT;
+#else
+#   error "Unknown Apple platform"
+#endif
+#elif __linux__
+  // linux
+  OS_TYPE = LINUX_PLAT;
+#else
+#   error "Unknown compiler"
+#endif  
+}
 
 std::string util::get_home_dir()
 {
@@ -38,6 +61,7 @@ void util::create_dir(std::string dir_location)
 
 void util::initialize()
 {
+  util::set_os_plat();
   util::create_dir(util::get_home_dir() + "/.jeff-launcher");
   util::create_dir(util::get_home_dir() + "/.jeff-launcher/AppIcons");
   util::create_dir(util::get_home_dir() + "/.jeff-launcher/DatabaseIndex");

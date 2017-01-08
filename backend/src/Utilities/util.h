@@ -28,6 +28,7 @@ class util{
 
   static void initialize();
  private:
+  static void set_os_plat();
   static std::string get_home_dir();
   static void create_dir(std::string dir_location);
   static void init_db();

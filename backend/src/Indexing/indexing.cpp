@@ -5,6 +5,11 @@
 #include <iostream>
 
 
+enum {
+  LINUX_PLAT,
+  MAC_PLAT
+};
+
 std::vector<std::string> subdir_locations;
 std::vector<std::string> file_locations;
 sqlite3 *index_db;
