@@ -33,8 +33,6 @@ Utilities/btree.h
 -
 Utilities/util.h
 -
-TargetConditionals.h
-/home/tashrif/Development/jeff-launcher/backend/src/TargetConditionals.h
 
 /usr/include/glib-2.0/glib.h
 glib/galloca.h

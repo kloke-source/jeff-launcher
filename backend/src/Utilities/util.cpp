@@ -15,6 +15,7 @@ namespace {
   std::vector<std::string> file_locations;
   int total_files=0;
   int subdir_count=0;
+
   int OS_TYPE;
 
   bool db_initialized=false;
@@ -24,6 +25,8 @@ namespace {
   std::string default_db_location;
 
   sqlite3 *index_db;
+
+
 };
 
 void util::set_os_plat()
@@ -69,6 +72,10 @@ void util::initialize()
   default_db_location = util::get_home_dir() + "/.jeff-launcher/DatabaseIndex/index.db";
 
   util::init_db();
+
+  if (OS_TYPE == MAC_PLAT) {
+    util::scan_dir("/Applications");
+  }
   util::flush_to_db(index_db, default_db_location.c_str());
 }
 
@@ -141,12 +148,12 @@ void util::load_db()
   }
 }
 
-void util::scan_dir(const char *dir_location){
+void util::scan_dir(const char *dir_location) {
 
   subdir_locations.push_back(dir_location);
 
-  for (size_t subdir_iter = 0; subdir_iter < subdir_locations.size(); subdir_iter++){
-    std::string file_location = subdir_locations[subdir_iter];
+
+  std::string file_location = dir_location; //ubdir_locations[subdir_iter];
     if (file_location.substr(file_location.length() - 1) != "/")
       file_location += "/";
 
@@ -155,7 +162,7 @@ void util::scan_dir(const char *dir_location){
 
     std::stringstream test;
     const char *file;
-    GDir *dir = g_dir_open(subdir_locations[subdir_iter].c_str(), 0, &error);
+    GDir *dir = g_dir_open(dir_location, 0, &error); //(subdir_locations[subdir_iter].c_str(), 0, &error);
 
     while ((file = g_dir_read_name(dir))){
       try {
@@ -166,6 +173,7 @@ void util::scan_dir(const char *dir_location){
         if (subdir_error == NULL) {
           subdir_count++;
           subdir_locations.push_back(util::to_char(subdir_location));
+          std::cout << "Plist -> " << subdir_location << "/Contents/info.plist"<< std::endl;
         }
         if (subdir_error != NULL){
           throw 0;
@@ -173,18 +181,9 @@ void util::scan_dir(const char *dir_location){
       }
       catch (int exception)
         {
-          std::string temp = file_location;
-          file_location += file;
-          std::cout << "File loc -> " << file_location << std::endl;
-
-          // check file format here
-          total_files++;
-          file_locations.push_back(file_location);
-
-          file_location = temp;
         }
     }
-  }
+  
   std::cout << "No. of Files : " << total_files << std::endl;
   std::cout << "No. of Subdirectories : " << subdir_count << std::endl;
   //sqlite3 *library_db = library_db;
