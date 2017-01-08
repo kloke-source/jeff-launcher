@@ -3,11 +3,24 @@
 #include <cstring>
 #include <sstream>
 #include <Utilities/util.h>
+#include <Utilities/dir-indexer.h>
 
+int main()
+{
+    std::string directory = "Applications";
+    DirIndex::search("/", directory);
+
+    return 0;
+}
+
+
+
+/*
 int main(int argc, char *argv[])
 {
-  util::initialize();
+  //util::initialize();
   //const char* test_param = "/Applications/Android File Transfer.app";
   //std::string test_param2 = "usbfistman.icns";
   //std::cout << "Found at -> " << util::look_in_dir(test_param, test_param2) << std::endl;
 }
+*/

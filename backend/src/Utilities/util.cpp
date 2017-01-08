@@ -9,6 +9,7 @@
 #include <sys/stat.h>
 #include <fcntl.h>
 #include <unistd.h>
+#include <Utilities/btree.h>
 
 enum {
   LINUX_PLAT,
@@ -18,6 +19,7 @@ enum {
 namespace {
   std::vector<std::string> subdir_locations;
   std::vector<std::string> file_locations;
+
   int total_files=0;
   int subdir_count=0;
 
@@ -190,11 +192,12 @@ void util::load_db()
   }
 }
 
-std::string util::look_in_dir(const char *dir_to_look, std::string look_for)
-{
-  std::vector<std::string> subdir_locations;
+void util::scan_dir(const char *dir_location) {
+  //std::vector<std::string> subdir_locations;
+  //std::vector<std::string> file_locations;
 
-  subdir_locations.push_back(dir_to_look);
+  int total_files = 0;
+  subdir_locations.push_back(dir_location);
 
   for (size_t subdir_iter = 0; subdir_iter < subdir_locations.size(); subdir_iter++){
     std::string file_location = subdir_locations[subdir_iter];
@@ -212,7 +215,7 @@ std::string util::look_in_dir(const char *dir_to_look, std::string look_for)
       try {
         GError *subdir_error = NULL;
 
-        std::string subdir_location = file_location + file;
+        string subdir_location = file_location + file;
         g_dir_open(util::to_char(subdir_location), 0, &subdir_error);
         if (subdir_error == NULL) {
           subdir_count++;
@@ -226,87 +229,19 @@ std::string util::look_in_dir(const char *dir_to_look, std::string look_for)
       {
         std::string temp = file_location;
         file_location += file;
-        // check file format
 
-        if (util::has_text(file_location, look_for))
-          return file_location;
+          total_files++;
+          std::cout << "File loc -> " << file_location << std::endl;
+          file_locations.push_back(file_location);
+          file_location = temp;
+        }
 
-        file_location = temp;
       }
     }
-  }
-  return "file_not_found";
-}
-
-void util::scan_dir(const char *dir_location) {
-
-  subdir_locations.push_back(dir_location);
 
 
-  std::string file_location = dir_location; //ubdir_locations[subdir_iter];
-  if (file_location.substr(file_location.length() - 1) != "/")
-    file_location += "/";
-
-  GError *error = NULL;
-  GError *subdir_error = NULL;
-
-  std::stringstream test;
-  const char *file;
-  GDir *dir = g_dir_open(dir_location, 0, &error); //(subdir_locations[subdir_iter].c_str(), 0, &error);
-
-  while ((file = g_dir_read_name(dir))){
-    try {
-      GError *subdir_error = NULL;
-
-      std::string subdir_location = file_location + file;
-      g_dir_open(util::to_char(subdir_location), 0, &subdir_error);
-      if (subdir_error == NULL) {
-        subdir_count++;
-        subdir_locations.push_back(util::to_char(subdir_location));
-
-        if (OS_TYPE == MAC_PLAT)
-          {
-
-            std::string plist_loc = subdir_location + "/Contents/Info.plist";
-
-            if (util::file_exists(plist_loc)) {
-              std::string exec_name = util::get_plist_property("CFBundleExecutable", plist_loc);
-              std::string icon_name = util::get_plist_property("CFBundleIconFile", plist_loc);
-              std::string raw_icon_name = util::trim_from_end(icon_name, ".icns");
-
-              //std::cout << "Looking in Dir -> " << subdir_location << std::endl;
-              //std::cout << "Icon name -> " << icon_name << std::endl;
-              std::cout << "Subdir loc const -> " << subdir_location.c_str() << std::endl;
-              std::cout << "Icon name -> " << icon_name << std::endl;
-              //std::string icns_file_loc = util::look_in_dir(subdir_location.c_str(), icon_name);
-
-
-/*
-              if (util::has_text(icns_file_loc, "file_not_found"))
-              {
-                std::cout << "Failed: " << std::endl;
-                std::cout << "Looking in Dir -> " << subdir_location << std::endl;
-                std::cout << "Icon name -> " << icon_name << std::endl;
-              }
-              */
-              //std::cout << "Plist -> " << plist_loc << std::endl;
-              //std::cout << "Icns -> " << icns_file_loc << std::endl;
-              //std::string icns_conv_cmd = "sips -s format png \"" + icns_file_loc + "\" --out\"~/.jeff-launcher/AppIcons/" + raw_icon_name + ".png";
-              //std::cout << "Icns conv cmd " << icns_conv_cmd << std::endl;c
-            }
-          }
-      }
-      if (subdir_error != NULL){
-        throw 0;
-        // Not a directory
-      }
-    }
-    catch (int exception)
-      {
-      }
-  }
-
-  //sqlite3 *library_db = library_db;
+  std::cout << "No. of Files : " << total_files << std::endl;
+  std::cout << "No. of Subdirectories : " << subdir_count << std::endl;
 }
 
 int util::generic_db_callback(void *data, int total_col_num, char **value, char **fields)
