@@ -189,6 +189,10 @@ void util::load_db()
   }
 }
 
+std::string look_in_dir(const char *dir_to_look, std::string look_for)
+{
+  
+}
 void util::scan_dir(const char *dir_location) {
 
   subdir_locations.push_back(dir_location);
@@ -215,7 +219,7 @@ void util::scan_dir(const char *dir_location) {
           subdir_count++;
           subdir_locations.push_back(util::to_char(subdir_location));
 
-          if (OS_TYPE = MAC_PLAT)
+          if (OS_TYPE == MAC_PLAT)
             {
               std::cout << "Plist -> " << subdir_location << "/Contents/Info.plist"<< std::endl;              
               std::string plist_loc = subdir_location + "/Contents/Info.plist";
@@ -224,8 +228,9 @@ void util::scan_dir(const char *dir_location) {
               std::string raw_icon_name = util::trim_from_end(icon_name, ".icns");
               std::string icon_loc = subdir_location + "/Contents/Resources/" + icon_name;
 
-              std::string icns_conv_cmd = "sips -s format png " + icon_loc + " --out " + util::get_home_dir() + "/AppIcons/" + raw_icon_name + ".png";
-              system(icns_conv_cmd.c_str());
+              std::cout <<  "Icns -> " << icon_name << std::endl;//= "sips -s format png " + icon_loc + " --out " + util::get_home_dir() + "/AppIcons/" + raw_icon_name + ".png";
+              //              std::cout << icns_conv_cmd << std::endl;
+              //system(icns_conv_cmd.c_str());
             }
         }
         if (subdir_error != NULL){
