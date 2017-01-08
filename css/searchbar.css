@@ -1,9 +1,44 @@
 textarea {
+  display:block;
+  margin-left: auto;
+  margin-right: auto;
   font-family: 'Open Sans', sans-serif;
-  font-size: '16px';
-  align: "left";
+  font-size: 16px;
+  height: auto;
+  width: 85%;
 }
+
 .searchBarDiv {
   font-family: 'Open Sans', sans-serif;
   font-size: '16px';
+  width: 85%;
+  margin: auto;
+
+}
+
+.table_1 {
+  visibility: hidden;
+  width: 72.75%;
+  height: auto;
+  margin-left: auto;
+  margin-right: auto;
+}
+table {
+font-family: arial, sans-serif;
+border-collapse: collapse;
+width: 100%;
+}
+
+td, th {
+border: 1px solid #dddddd;
+text-align: left;
+width: 15%;
+height: auto;
+}
+
+
+
+tr:nth-child(odd) {
+background-color: #cdc0c0;
+
 }
