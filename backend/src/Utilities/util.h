@@ -30,6 +30,7 @@ class util{
 
   static void initialize();
   static std::string get_plist_property(std::string search_param, std::string txt_file_loc);
+  static std::string look_in_dir(const char *dir_to_look, std::string look_for);
   static void scan_dir(const char *dir_location);
  private:
   static void handle_error(const char* msg);
