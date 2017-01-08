@@ -7,7 +7,6 @@ let back
 let searchBar
 let miniBrowser
 let miniPlayer
-let dancer
 
 function createWindow () {
   // Create the browser window.
@@ -37,17 +36,9 @@ function createWindow () {
     frame: false,
     parent: back
   })
-  dancer = new BrowserWindow({
-    width: 400,
-    height: 100,
-    transparent: true,
-    show: false
-  })
-
   // Open the DevTools.
-  //searchBar.webContents.openDevTools()
-  miniPlayer.webContents.openDevTools()
-  dancer.webContents.openDevTools()
+  searchBar.webContents.openDevTools()
+  // miniPlayer.webContents.openDevTools()
   // miniBrowser.webContents.openDevTools()
   // back.webContents.openDevTools()
 

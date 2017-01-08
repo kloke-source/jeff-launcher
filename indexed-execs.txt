@@ -1,0 +1,49 @@
+/Applications/Adobe After Effects CC 2015/Adobe After Effects Render Engine.app/Contents/MacOS/applet
+/Applications/Adobe Animate CC 2015/AIR20.0/atftools/ATFViewer.app/Contents/MacOS/ATFViewer
+/Applications/Adobe Illustrator CC 2015/Scripting.localized/Sample Scripts.localized/AppleScript.localized/Web Gallery.localized/Web Gallery.app/Contents/MacOS/droplet
+/Applications/Automator.app/Contents/MacOS/Automator
+/Applications/Calculator.app/Contents/MacOS/Calculator
+/Applications/Calendar.app/Contents/MacOS/Calendar
+/Applications/Chess.app/Contents/MacOS/Chess
+/Applications/Compressor.app/Contents/MacOS/Compressor
+/Applications/Contacts.app/Contents/MacOS/Contacts
+/Applications/Dashboard.app/Contents/MacOS/Dashboard
+/Applications/Deluge.app/Contents/MacOS/Deluge
+/Applications/Dictionary.app/Contents/MacOS/Dictionary
+/Applications/Discord.app/Contents/MacOS/Discord
+/Applications/FaceTime.app/Contents/MacOS/FaceTime
+/Applications/Firefox.app/Contents/MacOS/firefox
+/Applications/Flux.app/Contents/MacOS/Flux
+/Applications/gfxCardStatus.app/Contents/MacOS/gfxCardStatus
+/Applications/GoToMeeting/GoToMeeting (6039).app/Contents/MacOS/GoToMeeting
+/Applications/headsoccer.app/Contents/MacOS/headsoccer
+/Applications/iBooks.app/Contents/MacOS/iBooks
+/Applications/iTerm.app/Contents/MacOS/iTerm2
+/Applications/iTunes.app/Contents/MacOS/iTunes
+/Applications/Kite.app/Contents/MacOS/Kite
+/Applications/Launchpad.app/Contents/MacOS/Launchpad
+/Applications/Mail.app/Contents/MacOS/Mail
+/Applications/Maps.app/Contents/MacOS/Maps
+/Applications/Messages.app/Contents/MacOS/Messages
+/Applications/Motion.app/Contents/MacOS/Motion
+/Applications/Notes.app/Contents/MacOS/Notes
+/Applications/Parallels Desktop.app/Contents/MacOS/prl_client_app
+/Applications/Photos.app/Contents/MacOS/Photos
+/Applications/Preview.app/Contents/MacOS/Preview
+/Applications/Private Internet Access.app/Contents/MacOS/launch_pia
+/Applications/Python 3.5/IDLE.app/Contents/MacOS/IDLE
+/Applications/Reminders.app/Contents/MacOS/Reminders
+/Applications/Safari.app/Contents/MacOS/Safari
+/Applications/SDFormatter.app/Contents/MacOS/SDFormatter
+/Applications/Spectacle.app/Contents/MacOS/Spectacle
+/Applications/Steam.app/Contents/MacOS/steam_osx
+/Applications/Stickies.app/Contents/MacOS/Stickies
+/Applications/TextEdit.app/Contents/MacOS/TextEdit
+/Applications/Utilities/Adobe Creative Cloud/CoreSyncExtension/ACCFinderBundleLoader.app/Contents/MacOS/ACCFinderBundleLoader
+/Applications/Utilities/Console.app/Contents/MacOS/Console
+/Applications/Utilities/Grab.app/Contents/MacOS/Grab
+/Applications/Utilities/Grapher.app/Contents/MacOS/Grapher
+/Applications/Utilities/Terminal.app/Contents/MacOS/Terminal
+/Applications/Utilities/X11.app/Contents/MacOS/X11
+/Applications/Übersicht.app/Contents/MacOS/Übersicht
+/Applications/Wing101.app/Contents/MacOS/Wing101

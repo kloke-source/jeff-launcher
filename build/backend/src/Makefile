@@ -39,19 +39,19 @@ cmake_force:
 SHELL = /bin/sh
 
 # The CMake executable.
-CMAKE_COMMAND = /usr/bin/cmake
+CMAKE_COMMAND = /usr/local/Cellar/cmake/3.7.1/bin/cmake
 
 # The command to remove a file.
-RM = /usr/bin/cmake -E remove -f
+RM = /usr/local/Cellar/cmake/3.7.1/bin/cmake -E remove -f
 
 # Escaping for special characters.
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/tashrif/Development/jeff-launcher
+CMAKE_SOURCE_DIR = /Users/WilliamSinclair/Documents/dev/jeff-launcher
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/tashrif/Development/jeff-launcher/build
+CMAKE_BINARY_DIR = /Users/WilliamSinclair/Documents/dev/jeff-launcher/build
 
 #=============================================================================
 # Targets provided globally by CMake.
@@ -59,7 +59,7 @@ CMAKE_BINARY_DIR = /home/tashrif/Development/jeff-launcher/build
 # Special rule for the target rebuild_cache
 rebuild_cache:
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Running CMake to regenerate build system..."
-	/usr/bin/cmake -H$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR)
+	/usr/local/Cellar/cmake/3.7.1/bin/cmake -H$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR)
 .PHONY : rebuild_cache
 
 # Special rule for the target rebuild_cache
@@ -70,7 +70,7 @@ rebuild_cache/fast: rebuild_cache
 # Special rule for the target edit_cache
 edit_cache:
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Running CMake cache editor..."
-	/usr/bin/ccmake -H$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR)
+	/usr/local/Cellar/cmake/3.7.1/bin/ccmake -H$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR)
 .PHONY : edit_cache
 
 # Special rule for the target edit_cache
@@ -80,14 +80,14 @@ edit_cache/fast: edit_cache
 
 # The main all target
 all: cmake_check_build_system
-	cd /home/tashrif/Development/jeff-launcher/build && $(CMAKE_COMMAND) -E cmake_progress_start /home/tashrif/Development/jeff-launcher/build/CMakeFiles /home/tashrif/Development/jeff-launcher/build/backend/src/CMakeFiles/progress.marks
-	cd /home/tashrif/Development/jeff-launcher/build && $(MAKE) -f CMakeFiles/Makefile2 backend/src/all
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/tashrif/Development/jeff-launcher/build/CMakeFiles 0
+	cd /Users/WilliamSinclair/Documents/dev/jeff-launcher/build && $(CMAKE_COMMAND) -E cmake_progress_start /Users/WilliamSinclair/Documents/dev/jeff-launcher/build/CMakeFiles /Users/WilliamSinclair/Documents/dev/jeff-launcher/build/backend/src/CMakeFiles/progress.marks
+	cd /Users/WilliamSinclair/Documents/dev/jeff-launcher/build && $(MAKE) -f CMakeFiles/Makefile2 backend/src/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /Users/WilliamSinclair/Documents/dev/jeff-launcher/build/CMakeFiles 0
 .PHONY : all
 
 # The main clean target
 clean:
-	cd /home/tashrif/Development/jeff-launcher/build && $(MAKE) -f CMakeFiles/Makefile2 backend/src/clean
+	cd /Users/WilliamSinclair/Documents/dev/jeff-launcher/build && $(MAKE) -f CMakeFiles/Makefile2 backend/src/clean
 .PHONY : clean
 
 # The main clean target
@@ -97,22 +97,22 @@ clean/fast: clean
 
 # Prepare targets for installation.
 preinstall: all
-	cd /home/tashrif/Development/jeff-launcher/build && $(MAKE) -f CMakeFiles/Makefile2 backend/src/preinstall
+	cd /Users/WilliamSinclair/Documents/dev/jeff-launcher/build && $(MAKE) -f CMakeFiles/Makefile2 backend/src/preinstall
 .PHONY : preinstall
 
 # Prepare targets for installation.
 preinstall/fast:
-	cd /home/tashrif/Development/jeff-launcher/build && $(MAKE) -f CMakeFiles/Makefile2 backend/src/preinstall
+	cd /Users/WilliamSinclair/Documents/dev/jeff-launcher/build && $(MAKE) -f CMakeFiles/Makefile2 backend/src/preinstall
 .PHONY : preinstall/fast
 
 # clear depends
 depend:
-	cd /home/tashrif/Development/jeff-launcher/build && $(CMAKE_COMMAND) -H$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 1
+	cd /Users/WilliamSinclair/Documents/dev/jeff-launcher/build && $(CMAKE_COMMAND) -H$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 1
 .PHONY : depend
 
 # Convenience name for target.
 backend/src/CMakeFiles/jeff-backend.dir/rule:
-	cd /home/tashrif/Development/jeff-launcher/build && $(MAKE) -f CMakeFiles/Makefile2 backend/src/CMakeFiles/jeff-backend.dir/rule
+	cd /Users/WilliamSinclair/Documents/dev/jeff-launcher/build && $(MAKE) -f CMakeFiles/Makefile2 backend/src/CMakeFiles/jeff-backend.dir/rule
 .PHONY : backend/src/CMakeFiles/jeff-backend.dir/rule
 
 # Convenience name for target.
@@ -122,7 +122,7 @@ jeff-backend: backend/src/CMakeFiles/jeff-backend.dir/rule
 
 # fast build rule for target.
 jeff-backend/fast:
-	cd /home/tashrif/Development/jeff-launcher/build && $(MAKE) -f backend/src/CMakeFiles/jeff-backend.dir/build.make backend/src/CMakeFiles/jeff-backend.dir/build
+	cd /Users/WilliamSinclair/Documents/dev/jeff-launcher/build && $(MAKE) -f backend/src/CMakeFiles/jeff-backend.dir/build.make backend/src/CMakeFiles/jeff-backend.dir/build
 .PHONY : jeff-backend/fast
 
 main.o: main.cpp.o
@@ -131,7 +131,7 @@ main.o: main.cpp.o
 
 # target to build an object file
 main.cpp.o:
-	cd /home/tashrif/Development/jeff-launcher/build && $(MAKE) -f backend/src/CMakeFiles/jeff-backend.dir/build.make backend/src/CMakeFiles/jeff-backend.dir/main.cpp.o
+	cd /Users/WilliamSinclair/Documents/dev/jeff-launcher/build && $(MAKE) -f backend/src/CMakeFiles/jeff-backend.dir/build.make backend/src/CMakeFiles/jeff-backend.dir/main.cpp.o
 .PHONY : main.cpp.o
 
 main.i: main.cpp.i
@@ -140,7 +140,7 @@ main.i: main.cpp.i
 
 # target to preprocess a source file
 main.cpp.i:
-	cd /home/tashrif/Development/jeff-launcher/build && $(MAKE) -f backend/src/CMakeFiles/jeff-backend.dir/build.make backend/src/CMakeFiles/jeff-backend.dir/main.cpp.i
+	cd /Users/WilliamSinclair/Documents/dev/jeff-launcher/build && $(MAKE) -f backend/src/CMakeFiles/jeff-backend.dir/build.make backend/src/CMakeFiles/jeff-backend.dir/main.cpp.i
 .PHONY : main.cpp.i
 
 main.s: main.cpp.s
@@ -149,7 +149,7 @@ main.s: main.cpp.s
 
 # target to generate assembly for a file
 main.cpp.s:
-	cd /home/tashrif/Development/jeff-launcher/build && $(MAKE) -f backend/src/CMakeFiles/jeff-backend.dir/build.make backend/src/CMakeFiles/jeff-backend.dir/main.cpp.s
+	cd /Users/WilliamSinclair/Documents/dev/jeff-launcher/build && $(MAKE) -f backend/src/CMakeFiles/jeff-backend.dir/build.make backend/src/CMakeFiles/jeff-backend.dir/main.cpp.s
 .PHONY : main.cpp.s
 
 # Help Target
@@ -175,6 +175,6 @@ help:
 # No rule that depends on this can have commands that come from listfiles
 # because they might be regenerated.
 cmake_check_build_system:
-	cd /home/tashrif/Development/jeff-launcher/build && $(CMAKE_COMMAND) -H$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 0
+	cd /Users/WilliamSinclair/Documents/dev/jeff-launcher/build && $(CMAKE_COMMAND) -H$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 0
 .PHONY : cmake_check_build_system
 

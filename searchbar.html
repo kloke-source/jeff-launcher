@@ -37,19 +37,47 @@
       cell1.innerHTML = f;
       cell2.innerHTML = appName;
     }
-    var data = [];
+    var dispFile = "display-names.txt";
+    var execFile = "indexed-execs.txt";
+    var reader = new FileReader();
+    var fs = require('fs-extra');
+    var arraynames = fs.readFileSync(dispFile).toString().split("\n");
+    var arrayexecs = fs.readFileSync(execFile).toString().split("\n");
+    var currentCell = -1;
     function fillTable() {
+      var globalShortcut = require('electron').remote.globalShortcut;
       var Table = document.getElementById("resultTable");
+      var textArea = document.getElementById('searchText');
       Table.style.visibility = "visible";
       Table.innerHTML = '';
-      for (i=data.length - 1; i>=0; i--) {
-        add_row("resources/magGlass.png", data[i]);
+      var data = [];
+      data.push(["Search on Google", "search"]);
+      for (i=0; i < arraynames.length; i++) {
+        if (arraynames[i].search(textArea.value) != -1 && data.length <= 5){
+          data.push([arraynames[i], "app"]);
+        }
       }
+      for (i=data.length - 1; i>0; i--) {
+        add_row("resources/application.png", data[i][0])
+      }
+      add_row("resources/magGlass.png", data[0][0]);
     var remote = require('electron').remote.BrowserWindow;
     var win = remote.getFocusedWindow();
     var h1 = document.getElementById("searchBarDiv").clientHeight;
     var h2 = document.getElementById("resultTable").clientHeight;
     win.setSize(800, (h1 + h2), false);
+    var textArea = document.getElementById('searchText');
+    textArea.name = textArea.value;
+    globalShortcut.register("Tab", function() {
+        if (currentCell >= 5) {
+          currentCell = 0;
+        }
+        else {
+          currentCell++;
+        }
+        textArea.value = data[currentCell][0];
+      })
+
     query();
     }
     </script>
@@ -58,30 +86,31 @@
       var globalShortcut = require('electron').remote.globalShortcut;
       var rem = require('electron').remote.BrowserWindow;
       var request = require('request');
-      globalShortcut.register("CmdOrCtrl+Enter", function() {
-        var query = document.getElementById('searchText').value;
-        if (query.indexOf('music')){
-          win = rem.fromId(5);
-          win.show();
-          win.loadURL(`file://${__dirname}/musicplayer.html`);
-        }
-        else {
-          query = query.replace(' ','+');
-          console.log(query);
-          win = rem.fromId(3);
-          win.show();
-          win.loadURL("https://www.google.ca/webhp?hl=en&sa=X&ved=0ahUKEwjb6rXWq7LRAhUG1oMKHSt7CUMQPAgD#hl=en&q="+query);
-        }
+      globalShortcut.register("Enter", function() {
+        var google = true;
+          var query = document.getElementById('searchText').value;
+          for (i=0; i<arraynames.length; i++) {
+            if (arraynames[i].search(query) != -1){
+              query = arrayexecs[i];
+              var shell = require('shelljs');
+              var output = shell.exec(query,{async:true}, (error, stdout, stderr) => {
+              });
+              google = false;
+            }
+          }
+          if (google) {
+            query = query.replace(' ','+');
+            console.log(query);
+            win = rem.fromId(3);
+            win.show();
+            win.loadURL("https://www.google.ca/webhp?hl=en&sa=X&ved=0ahUKEwjb6rXWq7LRAhUG1oMKHSt7CUMQPAgD#hl=en&q="+query);
+          }
       });
     }
     </script>
     <script>
     /*
-    var shell = require('shelljs');
-    var output = shell.exec('ls -a ~',{async:true}, (error, stdout, stderr) => {
-    console.log(`stdout: ${stdout}`);
-    console.log(`stderr: ${stderr}`);
-    });
+
     */
     </script>
 </html>
