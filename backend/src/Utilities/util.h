@@ -9,6 +9,7 @@
 
 class util{
  public:
+  static int get_os_plat();
   static std::string trim_from_beg(std::string text, std::string trim_param);
   static std::string trim_from_end(std::string text, std::string trim_param);
   static std::string replace(std::string text, std::string find_value, std::string replace_value);

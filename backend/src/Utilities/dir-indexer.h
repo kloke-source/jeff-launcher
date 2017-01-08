@@ -7,7 +7,6 @@
 
 class DirIndex{
  public:
-  static void set_file_cb(std::function<void(std::string, std::string)> cb);
   static void search(std::string search_path, std::string directory);
  private:
   static void process_directory(std::string directory);
@@ -17,12 +16,7 @@ class DirIndex{
 
 namespace {
   std::string path = "/";
-  std::function<void(std::string, std::string)> file_cb;
-}
-
-void DirIndex::set_file_cb(std::function<void(std::string, std::string)> cb)
-{
-  file_cb = cb;
+  btree<std::string> mac_app_indexed_plists;
 }
 
 void DirIndex::search(std::string search_path, std::string directory)
@@ -87,8 +81,25 @@ void DirIndex::process_entity(struct dirent* entity)
 
 void DirIndex::process_file(std::string file)
 {
-  //  std::cout << "Process file     : " << file.c_str() << std::endl;
-  file_cb(path, file);
-  //if you want to do something with the file add your code here
+  std::string file_loc = path + file;
+
+      if (mac_app_indexed_plists.check(path) == false)
+        {
+      std::string plist_loc = path + "/Contents/Info.plist";
+
+      if (util::file_exists(plist_loc)) {
+        std::string exec_name = util::get_plist_property("CFBundleExecutable", plist_loc);
+        std::string icon_name = util::get_plist_property("CFBundleIconFile", plist_loc);
+        std::string raw_icon_name = util::trim_from_end(icon_name, ".icns");
+
+        //std::cout << "Looking in Dir -> " << subdir_location << std::endl;
+        //std::cout << "Icon name -> " << icon_name << std::endl;
+        std::cout << "Dir -> " << path << std::endl;
+        std::cout << "Icon name -> " << icon_name << std::endl;
+        //std::string icns_file_loc = util::look_in_dir(subdir_location.c_str(), icon_name);
+
+      }
+      mac_app_indexed_plists.insert(path);
+        }
 }
 #endif
