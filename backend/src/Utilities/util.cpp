@@ -273,12 +273,26 @@ void util::scan_dir(const char *dir_location) {
               std::string exec_name = util::get_plist_property("CFBundleExecutable", plist_loc);
               std::string icon_name = util::get_plist_property("CFBundleIconFile", plist_loc);
               std::string raw_icon_name = util::trim_from_end(icon_name, ".icns");
-              std::string icns_file_loc = util::look_in_dir(subdir_location.c_str(), icon_name);
 
-              std::cout << "Plist -> " << plist_loc << std::endl;
-              std::cout << "Icns -> " << icns_file_loc << std::endl;
-              std::string icns_conv_cmd = "sips -s format png \"" + icns_file_loc + "\" --out\"~/.jeff-launcher/AppIcons/" + raw_icon_name + ".png";
-              system(icns_conv_cmd.c_str());
+              //std::cout << "Looking in Dir -> " << subdir_location << std::endl;
+              //std::cout << "Icon name -> " << icon_name << std::endl;
+              std::cout << "Subdir loc const -> " << subdir_location.c_str() << std::endl;
+              std::cout << "Icon name -> " << icon_name << std::endl;
+              //std::string icns_file_loc = util::look_in_dir(subdir_location.c_str(), icon_name);
+
+
+/*
+              if (util::has_text(icns_file_loc, "file_not_found"))
+              {
+                std::cout << "Failed: " << std::endl;
+                std::cout << "Looking in Dir -> " << subdir_location << std::endl;
+                std::cout << "Icon name -> " << icon_name << std::endl;
+              }
+              */
+              //std::cout << "Plist -> " << plist_loc << std::endl;
+              //std::cout << "Icns -> " << icns_file_loc << std::endl;
+              //std::string icns_conv_cmd = "sips -s format png \"" + icns_file_loc + "\" --out\"~/.jeff-launcher/AppIcons/" + raw_icon_name + ".png";
+              //std::cout << "Icns conv cmd " << icns_conv_cmd << std::endl;c
             }
           }
       }
@@ -292,8 +306,6 @@ void util::scan_dir(const char *dir_location) {
       }
   }
 
-  std::cout << "No. of Files : " << total_files << std::endl;
-  std::cout << "No. of Subdirectories : " << subdir_count << std::endl;
   //sqlite3 *library_db = library_db;
 }
 
