@@ -6,5 +6,5 @@ CXX_FLAGS = -O3 -DNDEBUG
 
 CXX_DEFINES = 
 
-CXX_INCLUDES = -I/usr/local/Cellar/glib/2.50.2/include/glib-2.0 -I/usr/local/Cellar/glib/2.50.2/lib/glib-2.0/include -I/usr/local/opt/gettext/include -I/usr/local/Cellar/pcre/8.39/include -I/Users/WilliamSinclair/Documents/dev/jeff-launcher/backend/src 
+CXX_INCLUDES = -I/usr/local/Cellar/glib/2.50.2/include/glib-2.0 -I/usr/local/Cellar/glib/2.50.2/lib/glib-2.0/include -I/usr/local/opt/gettext/include -I/usr/local/Cellar/pcre/8.39/include -I/Users/WilliamSinclair/Documents/jeff-launcher/backend/src 
 

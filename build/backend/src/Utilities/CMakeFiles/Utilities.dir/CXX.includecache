@@ -6,6 +6,20 @@
 
 #IncludeRegexTransform: 
 
+../backend/src/Utilities/btree.h
+iostream
+-
+vector
+-
+
+../backend/src/Utilities/dir-indexer.h
+string
+-
+dirent.h
+-
+functional
+-
+
 ../backend/src/Utilities/util.h
 iostream
 -
@@ -18,7 +32,7 @@ glib.h
 sqlite3.h
 -
 
-/Users/WilliamSinclair/Documents/dev/jeff-launcher/backend/src/Utilities/util.cpp
+/Users/WilliamSinclair/Documents/jeff-launcher/backend/src/Utilities/util.cpp
 sstream
 -
 iostream
@@ -41,8 +55,14 @@ fcntl.h
 -
 unistd.h
 -
+Utilities/btree.h
+-
+Utilities/dir-indexer.h
+-
+functional
+-
 TargetConditionals.h
-/Users/WilliamSinclair/Documents/dev/jeff-launcher/backend/src/Utilities/TargetConditionals.h
+/Users/WilliamSinclair/Documents/jeff-launcher/backend/src/Utilities/TargetConditionals.h
 
 /usr/local/Cellar/glib/2.50.2/include/glib-2.0/glib.h
 glib/galloca.h

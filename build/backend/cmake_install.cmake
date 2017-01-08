@@ -1,4 +1,4 @@
-# Install script for directory: /Users/WilliamSinclair/Documents/dev/jeff-launcher/backend
+# Install script for directory: /Users/WilliamSinclair/Documents/jeff-launcher/backend
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
@@ -34,7 +34,7 @@ endif()
 
 if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   # Include the install script for each subdirectory.
-  include("/Users/WilliamSinclair/Documents/dev/jeff-launcher/build/backend/src/cmake_install.cmake")
+  include("/Users/WilliamSinclair/Documents/jeff-launcher/build/backend/src/cmake_install.cmake")
 
 endif()
 

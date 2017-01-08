@@ -9,6 +9,10 @@
 #include <sys/stat.h>
 #include <fcntl.h>
 #include <unistd.h>
+#include <Utilities/btree.h>
+#include <Utilities/dir-indexer.h>
+#include <functional>
+
 
 enum {
   LINUX_PLAT,
@@ -18,6 +22,7 @@ enum {
 namespace {
   std::vector<std::string> subdir_locations;
   std::vector<std::string> file_locations;
+
   int total_files=0;
   int subdir_count=0;
 
@@ -34,6 +39,51 @@ namespace {
 
 };
 
+int util::get_os_plat()
+{
+  return OS_TYPE;
+}
+
+std::string util::gen_ins_stmt(std::string table_name, std::vector<std::string> fields, std::vector<std::string> values)
+{
+  std::stringstream fields_stream;
+  std::stringstream values_stream;
+
+  if (fields.size() == values.size()) {
+    fields_stream <<  "INSERT INTO " << table_name << " (";
+
+    for (size_t iter = 0; iter < fields.size(); iter++) {
+      if (iter != fields.size() - 1) {
+	fields_stream << fields[iter] << ", ";
+	values_stream << util::escape_string(values[iter]) <<  "', '";
+      }
+      else {
+	fields_stream << fields[iter] << ") VALUES('";
+	values_stream << util::escape_string(values[iter]) << "');";
+      }
+    }
+    fields_stream << values_stream.str();
+  }
+  else
+    return "Error number of fields don't match number of values";
+
+  return fields_stream.str();
+}
+
+std::pair<bool, int> util::search_vect(std::vector<std::string> vect, std::string search_param)
+ {
+   bool found = false;
+   int found_pos;
+   for (size_t iter = 0; iter < vect.size(); iter++) {
+     if (util::has_text(vect[iter], search_param)) {
+       found = true;
+       found_pos = iter;
+       break;
+     }
+   }
+   return std::make_pair(found, found_pos);
+ }
+
 void util::set_os_plat()
 {
 #ifdef __APPLE__
@@ -49,6 +99,11 @@ void util::set_os_plat()
 #else
 #   error "Unknown compiler"
 #endif
+}
+
+std::string util::get_file_format(std::string file)
+{
+  return file.substr(file.find_last_of(".") + 1);
 }
 
 std::string util::get_home_dir()
@@ -74,20 +129,31 @@ void util::initialize()
   util::create_dir(util::get_home_dir() + "/.jeff-launcher/AppIcons");
   util::create_dir(util::get_home_dir() + "/.jeff-launcher/DatabaseIndex");
 
-  default_db_location = util::get_home_dir() + "/.jeff-launcher/DatabaseIndex/index.db";
+  default_db_location = util::get_home_dir() + "/.jeff-launcher/DatabaseIndex/app-index.db";
 
   util::init_db();
+  util::load_db();
 
-  if (OS_TYPE == MAC_PLAT) {
-    util::scan_dir("/Applications");
-  }
-  util::flush_to_db(index_db, default_db_location.c_str());
+  if (OS_TYPE == MAC_PLAT)
+  DirIndex::search("/", "Applications");
+
+
+
+    util::flush_to_db(index_db, default_db_location.c_str());
 }
 
-void util::handle_error(const char* msg)
+void util::db_ins_row(std::string ins_stmt)
 {
-  perror(msg);
-  exit(255);
+  sqlite3_stmt *sql_stmt;
+
+  char *query = util::to_char(ins_stmt);
+  {
+    if(sqlite3_prepare(index_db, query, -1, &sql_stmt, 0) == SQLITE_OK)
+    {
+      sqlite3_step(sql_stmt);
+      sqlite3_finalize(sql_stmt);
+    }
+  }
 }
 
 std::string util::get_plist_property(std::string plist_prop, std::string plist_loc)
@@ -131,13 +197,9 @@ void util::init_db()
 
     /* Open database */
     ret_code = sqlite3_open_v2("", &index_db, SQLITE_OPEN_READWRITE, NULL); /**< By leaving the first parameter sqlite creates a temporary database which has comparable speeds to a full fledged in-memory database */
-    if( ret_code ){
-      fprintf(stderr, "Can't open database: %s\n", sqlite3_errmsg(index_db));
-    }else{
-      fprintf(stdout, "Opened database successfully\n");
-    }
 
-    sql_stmt = "CREATE TABLE `index` (" \
+
+    sql_stmt = "CREATE TABLE `indexed_data` (" \
       "`ID`	INTEGER PRIMARY KEY AUTOINCREMENT UNIQUE," \
       "`icon_location`	TEXT," \
       "`app_name`	TEXT," \
@@ -150,10 +212,13 @@ void util::init_db()
       if (util::has_text(error_msg, "already exists") == false) // omits the already exists error msg
         fprintf(stderr, "SQL error: %s\n", error_msg);
       sqlite3_free(error_msg);
-    }else{
-      fprintf(stdout, "Table created successfully\n");
     }
   }
+}
+
+void util::flush()
+{
+    util::flush_to_db(index_db, default_db_location.c_str());
 }
 
 void util::load_db()
@@ -190,124 +255,6 @@ void util::load_db()
   }
 }
 
-std::string util::look_in_dir(const char *dir_to_look, std::string look_for)
-{
-  std::vector<std::string> subdir_locations;
-
-  subdir_locations.push_back(dir_to_look);
-
-  for (size_t subdir_iter = 0; subdir_iter < subdir_locations.size(); subdir_iter++){
-    std::string file_location = subdir_locations[subdir_iter];
-    if (file_location.substr(file_location.length() - 1) != "/")
-    file_location += "/";
-
-    GError *error = NULL;
-    GError *subdir_error = NULL;
-
-    std::stringstream test;
-    const char *file;
-    GDir *dir = g_dir_open(subdir_locations[subdir_iter].c_str(), 0, &error);
-
-    while ((file = g_dir_read_name(dir))){
-      try {
-        GError *subdir_error = NULL;
-
-        std::string subdir_location = file_location + file;
-        g_dir_open(util::to_char(subdir_location), 0, &subdir_error);
-        if (subdir_error == NULL) {
-          subdir_count++;
-          subdir_locations.push_back(util::to_char(subdir_location));
-        }
-        if (subdir_error != NULL){
-          throw 0;
-        }
-      }
-      catch (int exception)
-      {
-        std::string temp = file_location;
-        file_location += file;
-        // check file format
-
-        if (util::has_text(file_location, look_for))
-          return file_location;
-
-        file_location = temp;
-      }
-    }
-  }
-  return "file_not_found";
-}
-
-void util::scan_dir(const char *dir_location) {
-
-  subdir_locations.push_back(dir_location);
-
-
-  std::string file_location = dir_location; //ubdir_locations[subdir_iter];
-  if (file_location.substr(file_location.length() - 1) != "/")
-    file_location += "/";
-
-  GError *error = NULL;
-  GError *subdir_error = NULL;
-
-  std::stringstream test;
-  const char *file;
-  GDir *dir = g_dir_open(dir_location, 0, &error); //(subdir_locations[subdir_iter].c_str(), 0, &error);
-
-  while ((file = g_dir_read_name(dir))){
-    try {
-      GError *subdir_error = NULL;
-
-      std::string subdir_location = file_location + file;
-      g_dir_open(util::to_char(subdir_location), 0, &subdir_error);
-      if (subdir_error == NULL) {
-        subdir_count++;
-        subdir_locations.push_back(util::to_char(subdir_location));
-
-        if (OS_TYPE == MAC_PLAT)
-          {
-
-            std::string plist_loc = subdir_location + "/Contents/Info.plist";
-
-            if (util::file_exists(plist_loc)) {
-              std::string exec_name = util::get_plist_property("CFBundleExecutable", plist_loc);
-              std::string icon_name = util::get_plist_property("CFBundleIconFile", plist_loc);
-              std::string raw_icon_name = util::trim_from_end(icon_name, ".icns");
-
-              //std::cout << "Looking in Dir -> " << subdir_location << std::endl;
-              //std::cout << "Icon name -> " << icon_name << std::endl;
-              std::cout << "Subdir loc const -> " << subdir_location.c_str() << std::endl;
-              std::cout << "Icon name -> " << icon_name << std::endl;
-              //std::string icns_file_loc = util::look_in_dir(subdir_location.c_str(), icon_name);
-
-
-/*
-              if (util::has_text(icns_file_loc, "file_not_found"))
-              {
-                std::cout << "Failed: " << std::endl;
-                std::cout << "Looking in Dir -> " << subdir_location << std::endl;
-                std::cout << "Icon name -> " << icon_name << std::endl;
-              }
-              */
-              //std::cout << "Plist -> " << plist_loc << std::endl;
-              //std::cout << "Icns -> " << icns_file_loc << std::endl;
-              //std::string icns_conv_cmd = "sips -s format png \"" + icns_file_loc + "\" --out\"~/.jeff-launcher/AppIcons/" + raw_icon_name + ".png";
-              //std::cout << "Icns conv cmd " << icns_conv_cmd << std::endl;c
-            }
-          }
-      }
-      if (subdir_error != NULL){
-        throw 0;
-        // Not a directory
-      }
-    }
-    catch (int exception)
-      {
-      }
-  }
-
-  //sqlite3 *library_db = library_db;
-}
 
 int util::generic_db_callback(void *data, int total_col_num, char **value, char **fields)
 {

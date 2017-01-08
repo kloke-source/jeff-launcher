@@ -3,7 +3,7 @@
 
 backend/src/CMakeFiles/jeff-backend.dir/main.cpp.o
  ../backend/src/Utilities/util.h
- /Users/WilliamSinclair/Documents/dev/jeff-launcher/backend/src/main.cpp
+ /Users/WilliamSinclair/Documents/jeff-launcher/backend/src/main.cpp
  /usr/local/Cellar/glib/2.50.2/include/glib-2.0/glib.h
  /usr/local/Cellar/glib/2.50.2/include/glib-2.0/glib/deprecated/gallocator.h
  /usr/local/Cellar/glib/2.50.2/include/glib-2.0/glib/deprecated/gcache.h

@@ -43,10 +43,10 @@ RM = /usr/local/Cellar/cmake/3.7.1/bin/cmake -E remove -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /Users/WilliamSinclair/Documents/dev/jeff-launcher
+CMAKE_SOURCE_DIR = /Users/WilliamSinclair/Documents/jeff-launcher
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /Users/WilliamSinclair/Documents/dev/jeff-launcher/build
+CMAKE_BINARY_DIR = /Users/WilliamSinclair/Documents/jeff-launcher/build
 
 # Include any dependencies generated for this target.
 include backend/src/Utilities/CMakeFiles/Utilities.dir/depend.make
@@ -59,16 +59,16 @@ include backend/src/Utilities/CMakeFiles/Utilities.dir/flags.make
 
 backend/src/Utilities/CMakeFiles/Utilities.dir/util.cpp.o: backend/src/Utilities/CMakeFiles/Utilities.dir/flags.make
 backend/src/Utilities/CMakeFiles/Utilities.dir/util.cpp.o: ../backend/src/Utilities/util.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/WilliamSinclair/Documents/dev/jeff-launcher/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object backend/src/Utilities/CMakeFiles/Utilities.dir/util.cpp.o"
-	cd /Users/WilliamSinclair/Documents/dev/jeff-launcher/build/backend/src/Utilities && /usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/Utilities.dir/util.cpp.o -c /Users/WilliamSinclair/Documents/dev/jeff-launcher/backend/src/Utilities/util.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/WilliamSinclair/Documents/jeff-launcher/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object backend/src/Utilities/CMakeFiles/Utilities.dir/util.cpp.o"
+	cd /Users/WilliamSinclair/Documents/jeff-launcher/build/backend/src/Utilities && /usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/Utilities.dir/util.cpp.o -c /Users/WilliamSinclair/Documents/jeff-launcher/backend/src/Utilities/util.cpp
 
 backend/src/Utilities/CMakeFiles/Utilities.dir/util.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/Utilities.dir/util.cpp.i"
-	cd /Users/WilliamSinclair/Documents/dev/jeff-launcher/build/backend/src/Utilities && /usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/WilliamSinclair/Documents/dev/jeff-launcher/backend/src/Utilities/util.cpp > CMakeFiles/Utilities.dir/util.cpp.i
+	cd /Users/WilliamSinclair/Documents/jeff-launcher/build/backend/src/Utilities && /usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/WilliamSinclair/Documents/jeff-launcher/backend/src/Utilities/util.cpp > CMakeFiles/Utilities.dir/util.cpp.i
 
 backend/src/Utilities/CMakeFiles/Utilities.dir/util.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/Utilities.dir/util.cpp.s"
-	cd /Users/WilliamSinclair/Documents/dev/jeff-launcher/build/backend/src/Utilities && /usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/WilliamSinclair/Documents/dev/jeff-launcher/backend/src/Utilities/util.cpp -o CMakeFiles/Utilities.dir/util.cpp.s
+	cd /Users/WilliamSinclair/Documents/jeff-launcher/build/backend/src/Utilities && /usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/WilliamSinclair/Documents/jeff-launcher/backend/src/Utilities/util.cpp -o CMakeFiles/Utilities.dir/util.cpp.s
 
 backend/src/Utilities/CMakeFiles/Utilities.dir/util.cpp.o.requires:
 
@@ -91,9 +91,9 @@ Utilities_EXTERNAL_OBJECTS =
 backend/src/Utilities/libUtilities.a: backend/src/Utilities/CMakeFiles/Utilities.dir/util.cpp.o
 backend/src/Utilities/libUtilities.a: backend/src/Utilities/CMakeFiles/Utilities.dir/build.make
 backend/src/Utilities/libUtilities.a: backend/src/Utilities/CMakeFiles/Utilities.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/Users/WilliamSinclair/Documents/dev/jeff-launcher/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Linking CXX static library libUtilities.a"
-	cd /Users/WilliamSinclair/Documents/dev/jeff-launcher/build/backend/src/Utilities && $(CMAKE_COMMAND) -P CMakeFiles/Utilities.dir/cmake_clean_target.cmake
-	cd /Users/WilliamSinclair/Documents/dev/jeff-launcher/build/backend/src/Utilities && $(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/Utilities.dir/link.txt --verbose=$(VERBOSE)
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/Users/WilliamSinclair/Documents/jeff-launcher/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Linking CXX static library libUtilities.a"
+	cd /Users/WilliamSinclair/Documents/jeff-launcher/build/backend/src/Utilities && $(CMAKE_COMMAND) -P CMakeFiles/Utilities.dir/cmake_clean_target.cmake
+	cd /Users/WilliamSinclair/Documents/jeff-launcher/build/backend/src/Utilities && $(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/Utilities.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.
 backend/src/Utilities/CMakeFiles/Utilities.dir/build: backend/src/Utilities/libUtilities.a
@@ -105,10 +105,10 @@ backend/src/Utilities/CMakeFiles/Utilities.dir/requires: backend/src/Utilities/C
 .PHONY : backend/src/Utilities/CMakeFiles/Utilities.dir/requires
 
 backend/src/Utilities/CMakeFiles/Utilities.dir/clean:
-	cd /Users/WilliamSinclair/Documents/dev/jeff-launcher/build/backend/src/Utilities && $(CMAKE_COMMAND) -P CMakeFiles/Utilities.dir/cmake_clean.cmake
+	cd /Users/WilliamSinclair/Documents/jeff-launcher/build/backend/src/Utilities && $(CMAKE_COMMAND) -P CMakeFiles/Utilities.dir/cmake_clean.cmake
 .PHONY : backend/src/Utilities/CMakeFiles/Utilities.dir/clean
 
 backend/src/Utilities/CMakeFiles/Utilities.dir/depend:
-	cd /Users/WilliamSinclair/Documents/dev/jeff-launcher/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /Users/WilliamSinclair/Documents/dev/jeff-launcher /Users/WilliamSinclair/Documents/dev/jeff-launcher/backend/src/Utilities /Users/WilliamSinclair/Documents/dev/jeff-launcher/build /Users/WilliamSinclair/Documents/dev/jeff-launcher/build/backend/src/Utilities /Users/WilliamSinclair/Documents/dev/jeff-launcher/build/backend/src/Utilities/CMakeFiles/Utilities.dir/DependInfo.cmake --color=$(COLOR)
+	cd /Users/WilliamSinclair/Documents/jeff-launcher/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /Users/WilliamSinclair/Documents/jeff-launcher /Users/WilliamSinclair/Documents/jeff-launcher/backend/src/Utilities /Users/WilliamSinclair/Documents/jeff-launcher/build /Users/WilliamSinclair/Documents/jeff-launcher/build/backend/src/Utilities /Users/WilliamSinclair/Documents/jeff-launcher/build/backend/src/Utilities/CMakeFiles/Utilities.dir/DependInfo.cmake --color=$(COLOR)
 .PHONY : backend/src/Utilities/CMakeFiles/Utilities.dir/depend
 
