@@ -6,5 +6,8 @@
 
 int main(int argc, char *argv[])
 {
-  util::look_in_dir("/home/tashrif/Development", "release-cmake");
+  util::initialize();
+  //const char* test_param = "/Applications/Android File Transfer.app";
+  //std::string test_param2 = "usbfistman.icns";
+  //std::cout << "Found at -> " << util::look_in_dir(test_param, test_param2) << std::endl;
 }
