@@ -37,7 +37,7 @@ function createWindow () {
     parent: back
   })
   // Open the DevTools.
-  searchBar.webContents.openDevTools()
+  // searchBar.webContents.openDevTools()
   // miniPlayer.webContents.openDevTools()
   // miniBrowser.webContents.openDevTools()
   // back.webContents.openDevTools()
