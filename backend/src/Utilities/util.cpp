@@ -44,6 +44,46 @@ int util::get_os_plat()
   return OS_TYPE;
 }
 
+std::string util::gen_ins_stmt(std::string table_name, std::vector<std::string> fields, std::vector<std::string> values)
+{
+  std::stringstream fields_stream;
+  std::stringstream values_stream;
+
+  if (fields.size() == values.size()) {
+    fields_stream <<  "INSERT INTO " << table_name << " (";
+
+    for (size_t iter = 0; iter < fields.size(); iter++) {
+      if (iter != fields.size() - 1) {
+	fields_stream << fields[iter] << ", ";
+	values_stream << util::escape_string(values[iter]) <<  "', '";
+      }
+      else {
+	fields_stream << fields[iter] << ") VALUES('";
+	values_stream << util::escape_string(values[iter]) << "');";
+      }
+    }
+    fields_stream << values_stream.str();
+  }
+  else
+    return "Error number of fields don't match number of values";
+
+  return fields_stream.str();
+}
+
+std::pair<bool, int> util::search_vect(std::vector<std::string> vect, std::string search_param)
+ {
+   bool found = false;
+   int found_pos;
+   for (size_t iter = 0; iter < vect.size(); iter++) {
+     if (util::has_text(vect[iter], search_param)) {
+       found = true;
+       found_pos = iter;
+       break;
+     }
+   }
+   return std::make_pair(found, found_pos);
+ }
+
 void util::set_os_plat()
 {
 #ifdef __APPLE__
@@ -89,9 +129,10 @@ void util::initialize()
   util::create_dir(util::get_home_dir() + "/.jeff-launcher/AppIcons");
   util::create_dir(util::get_home_dir() + "/.jeff-launcher/DatabaseIndex");
 
-  default_db_location = util::get_home_dir() + "/.jeff-launcher/DatabaseIndex/index.db";
+  default_db_location = util::get_home_dir() + "/.jeff-launcher/DatabaseIndex/app-index.db";
 
   util::init_db();
+  util::load_db();
 
   if (OS_TYPE == MAC_PLAT)
   DirIndex::search("/", "Applications");
@@ -99,6 +140,20 @@ void util::initialize()
 
 
     util::flush_to_db(index_db, default_db_location.c_str());
+}
+
+void util::db_ins_row(std::string ins_stmt)
+{
+  sqlite3_stmt *sql_stmt;
+
+  char *query = util::to_char(ins_stmt);
+  {
+    if(sqlite3_prepare(index_db, query, -1, &sql_stmt, 0) == SQLITE_OK)
+    {
+      sqlite3_step(sql_stmt);
+      sqlite3_finalize(sql_stmt);
+    }
+  }
 }
 
 std::string util::get_plist_property(std::string plist_prop, std::string plist_loc)
@@ -142,13 +197,9 @@ void util::init_db()
 
     /* Open database */
     ret_code = sqlite3_open_v2("", &index_db, SQLITE_OPEN_READWRITE, NULL); /**< By leaving the first parameter sqlite creates a temporary database which has comparable speeds to a full fledged in-memory database */
-    if( ret_code ){
-      fprintf(stderr, "Can't open database: %s\n", sqlite3_errmsg(index_db));
-    }else{
-      fprintf(stdout, "Opened database successfully\n");
-    }
 
-    sql_stmt = "CREATE TABLE `index` (" \
+
+    sql_stmt = "CREATE TABLE `indexed_data` (" \
       "`ID`	INTEGER PRIMARY KEY AUTOINCREMENT UNIQUE," \
       "`icon_location`	TEXT," \
       "`app_name`	TEXT," \
@@ -161,10 +212,13 @@ void util::init_db()
       if (util::has_text(error_msg, "already exists") == false) // omits the already exists error msg
         fprintf(stderr, "SQL error: %s\n", error_msg);
       sqlite3_free(error_msg);
-    }else{
-      fprintf(stdout, "Table created successfully\n");
     }
   }
+}
+
+void util::flush()
+{
+    util::flush_to_db(index_db, default_db_location.c_str());
 }
 
 void util::load_db()

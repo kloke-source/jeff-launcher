@@ -10,6 +10,9 @@
 class util{
  public:
   static int get_os_plat();
+  static void db_ins_row(std::string ins_stmt);
+  static std::string gen_ins_stmt(std::string table_name, std::vector<std::string> fields, std::vector<std::string> values);
+  static std::pair<bool, int> search_vect(std::vector<std::string> vect, std::string search_param);
   static std::string trim_from_beg(std::string text, std::string trim_param);
   static std::string trim_from_end(std::string text, std::string trim_param);
   static std::string replace(std::string text, std::string find_value, std::string replace_value);
@@ -33,6 +36,7 @@ class util{
   static void initialize();
   static std::string get_plist_property(std::string search_param, std::string txt_file_loc);
 
+  static void flush();
  private:
   static std::string get_file_format(std::string file);
   static void set_os_plat();
