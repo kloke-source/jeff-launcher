@@ -190,9 +190,52 @@ void util::load_db()
   }
 }
 
-std::string look_in_dir(const char *dir_to_look, std::string look_for)
+std::string util::look_in_dir(const char *dir_to_look, std::string look_for)
 {
-  return "";
+  std::vector<std::string> subdir_locations;
+
+  subdir_locations.push_back(dir_to_look);
+
+  for (size_t subdir_iter = 0; subdir_iter < subdir_locations.size(); subdir_iter++){
+    std::string file_location = subdir_locations[subdir_iter];
+    if (file_location.substr(file_location.length() - 1) != "/")
+    file_location += "/";
+
+    GError *error = NULL;
+    GError *subdir_error = NULL;
+
+    std::stringstream test;
+    const char *file;
+    GDir *dir = g_dir_open(subdir_locations[subdir_iter].c_str(), 0, &error);
+
+    while ((file = g_dir_read_name(dir))){
+      try {
+        GError *subdir_error = NULL;
+
+        std::string subdir_location = file_location + file;
+        g_dir_open(util::to_char(subdir_location), 0, &subdir_error);
+        if (subdir_error == NULL) {
+          subdir_count++;
+          subdir_locations.push_back(util::to_char(subdir_location));
+        }
+        if (subdir_error != NULL){
+          throw 0;
+        }
+      }
+      catch (int exception)
+      {
+        std::string temp = file_location;
+        file_location += file;
+        // check file format
+
+        if (util::has_text(file_location, look_for))
+          return file_location;
+
+        file_location = temp;
+      }
+    }
+  }
+  return "file_not_found";
 }
 
 void util::scan_dir(const char *dir_location) {
@@ -224,17 +267,18 @@ void util::scan_dir(const char *dir_location) {
         if (OS_TYPE == MAC_PLAT)
           {
 
-            std::cout << "Plist -> " << subdir_location << "/Contents/Info.plist"<< std::endl;
             std::string plist_loc = subdir_location + "/Contents/Info.plist";
 
             if (util::file_exists(plist_loc)) {
               std::string exec_name = util::get_plist_property("CFBundleExecutable", plist_loc);
               std::string icon_name = util::get_plist_property("CFBundleIconFile", plist_loc);
               std::string raw_icon_name = util::trim_from_end(icon_name, ".icns");
-              std::string icon_loc = subdir_location + "/Contents/Resources/" + icon_name;
-              if (util::file_exists(icon_loc)) {
-                std::cout << "File icon exists -> " << icon_loc << std::endl;
-              }
+              std::string icns_file_loc = util::look_in_dir(subdir_location.c_str(), icon_name);
+
+              std::cout << "Plist -> " << plist_loc << std::endl;
+              std::cout << "Icns -> " << icns_file_loc << std::endl;
+              std::string icns_conv_cmd = "sips -s format png \"" + icns_file_loc + "\" --out\"~/.jeff-launcher/AppIcons/" + raw_icon_name + ".png";
+              system(icns_conv_cmd.c_str());
             }
           }
       }

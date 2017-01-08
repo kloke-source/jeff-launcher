@@ -6,5 +6,5 @@
 
 int main(int argc, char *argv[])
 {
-  util::initialize();
+  util::look_in_dir("/home/tashrif/Development", "release-cmake");
 }
