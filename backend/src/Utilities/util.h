@@ -31,9 +31,9 @@ class util{
 
   static void initialize();
   static std::string get_plist_property(std::string search_param, std::string txt_file_loc);
-  static void scan_dir(const char *dir_location);
+
  private:
-  static void handle_error(const char* msg);
+  static std::string get_file_format(std::string file);
   static void set_os_plat();
   static std::string get_home_dir();
   static void create_dir(std::string dir_location);

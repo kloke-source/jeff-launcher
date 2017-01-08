@@ -1,4 +1,4 @@
-# Install script for directory: /Users/edgar/Desktop/dev/jeff-launcher/backend/src/Utilities
+# Install script for directory: /home/tashrif/Development/jeff-launcher/backend/src/Utilities
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)

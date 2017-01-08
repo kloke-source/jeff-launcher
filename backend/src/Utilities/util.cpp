@@ -10,6 +10,9 @@
 #include <fcntl.h>
 #include <unistd.h>
 #include <Utilities/btree.h>
+#include <Utilities/dir-indexer.h>
+#include <functional>
+
 
 enum {
   LINUX_PLAT,
@@ -53,6 +56,11 @@ void util::set_os_plat()
 #endif
 }
 
+std::string util::get_file_format(std::string file)
+{
+  return file.substr(file.find_last_of(".") + 1);
+}
+
 std::string util::get_home_dir()
 {
   const char* home_dir = getenv("HOME");
@@ -81,15 +89,40 @@ void util::initialize()
   util::init_db();
 
   if (OS_TYPE == MAC_PLAT) {
-    util::scan_dir("/Applications");
-  }
-  util::flush_to_db(index_db, default_db_location.c_str());
-}
+    /* index callback function */
+    std::function<void(std::string, std::string)> index_cb;
 
-void util::handle_error(const char* msg)
-{
-  perror(msg);
-  exit(255);
+    btree<std::string> app_indexed_plists;
+    index_cb = [&app_indexed_plists](std::string dir, std::string file_input) {
+      std::string file_loc = dir + file_input;
+
+      if (app_indexed_plists.check(dir) == false)
+        {
+      std::string plist_loc = dir + "/Contents/Info.plist";
+
+      if (util::file_exists(plist_loc)) {
+        std::string exec_name = util::get_plist_property("CFBundleExecutable", plist_loc);
+        std::string icon_name = util::get_plist_property("CFBundleIconFile", plist_loc);
+        std::string raw_icon_name = util::trim_from_end(icon_name, ".icns");
+
+        //std::cout << "Looking in Dir -> " << subdir_location << std::endl;
+        //std::cout << "Icon name -> " << icon_name << std::endl;
+        std::cout << "Dir -> " << dir << std::endl;
+        std::cout << "Icon name -> " << icon_name << std::endl;
+        //std::string icns_file_loc = util::look_in_dir(subdir_location.c_str(), icon_name);
+
+      }
+      app_indexed_plists.insert(dir);
+        }
+    };
+
+    DirIndex::set_file_cb(index_cb);
+    DirIndex::search("/", "Applications");
+
+
+
+    util::flush_to_db(index_db, default_db_location.c_str());
+  }
 }
 
 std::string util::get_plist_property(std::string plist_prop, std::string plist_loc)
@@ -192,57 +225,6 @@ void util::load_db()
   }
 }
 
-void util::scan_dir(const char *dir_location) {
-  //std::vector<std::string> subdir_locations;
-  //std::vector<std::string> file_locations;
-
-  int total_files = 0;
-  subdir_locations.push_back(dir_location);
-
-  for (size_t subdir_iter = 0; subdir_iter < subdir_locations.size(); subdir_iter++){
-    std::string file_location = subdir_locations[subdir_iter];
-    if (file_location.substr(file_location.length() - 1) != "/")
-    file_location += "/";
-
-    GError *error = NULL;
-    GError *subdir_error = NULL;
-
-    std::stringstream test;
-    const char *file;
-    GDir *dir = g_dir_open(subdir_locations[subdir_iter].c_str(), 0, &error);
-
-    while ((file = g_dir_read_name(dir))){
-      try {
-        GError *subdir_error = NULL;
-
-        string subdir_location = file_location + file;
-        g_dir_open(util::to_char(subdir_location), 0, &subdir_error);
-        if (subdir_error == NULL) {
-          subdir_count++;
-          subdir_locations.push_back(util::to_char(subdir_location));
-        }
-        if (subdir_error != NULL){
-          throw 0;
-        }
-      }
-      catch (int exception)
-      {
-        std::string temp = file_location;
-        file_location += file;
-
-          total_files++;
-          std::cout << "File loc -> " << file_location << std::endl;
-          file_locations.push_back(file_location);
-          file_location = temp;
-        }
-
-      }
-    }
-
-
-  std::cout << "No. of Files : " << total_files << std::endl;
-  std::cout << "No. of Subdirectories : " << subdir_count << std::endl;
-}
 
 int util::generic_db_callback(void *data, int total_col_num, char **value, char **fields)
 {

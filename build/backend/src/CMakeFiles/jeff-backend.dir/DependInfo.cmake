@@ -4,22 +4,20 @@ set(CMAKE_DEPENDS_LANGUAGES
   )
 # The set of files for implicit dependencies of each language:
 set(CMAKE_DEPENDS_CHECK_CXX
-  "/Users/edgar/Desktop/dev/jeff-launcher/backend/src/main.cpp" "/Users/edgar/Desktop/dev/jeff-launcher/build/backend/src/CMakeFiles/jeff-backend.dir/main.cpp.o"
+  "/home/tashrif/Development/jeff-launcher/backend/src/main.cpp" "/home/tashrif/Development/jeff-launcher/build/backend/src/CMakeFiles/jeff-backend.dir/main.cpp.o"
   )
 set(CMAKE_CXX_COMPILER_ID "GNU")
 
 # The include file search paths:
 set(CMAKE_CXX_TARGET_INCLUDE_PATH
-  "/usr/local/Cellar/glib/2.50.2/include/glib-2.0"
-  "/usr/local/Cellar/glib/2.50.2/lib/glib-2.0/include"
-  "/usr/local/opt/gettext/include"
-  "/usr/local/Cellar/pcre/8.39/include"
+  "/usr/include/glib-2.0"
+  "/usr/lib/glib-2.0/include"
   "../backend/src"
   )
 
 # Targets to which this target links.
 set(CMAKE_TARGET_LINKED_INFO_FILES
-  "/Users/edgar/Desktop/dev/jeff-launcher/build/backend/src/Utilities/CMakeFiles/Utilities.dir/DependInfo.cmake"
+  "/home/tashrif/Development/jeff-launcher/build/backend/src/Utilities/CMakeFiles/Utilities.dir/DependInfo.cmake"
   )
 
 # Fortran module output directory.

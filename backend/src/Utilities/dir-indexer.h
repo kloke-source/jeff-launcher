@@ -1,17 +1,28 @@
+#ifndef DIR_INDEX_H
+#define DIR_INDEX_H
+
 #include <string>
 #include <dirent.h>
+#include <functional>
 
 class DirIndex{
-public:
+ public:
+  static void set_file_cb(std::function<void(std::string, std::string)> cb);
   static void search(std::string search_path, std::string directory);
-private:
-static void process_directory(std::string directory);
-static void process_file(std::string file);
-static void process_entity(struct dirent* entity);
+ private:
+  static void process_directory(std::string directory);
+  static void process_file(std::string file);
+  static void process_entity(struct dirent* entity);
 };
 
 namespace {
-std::string path = "/";
+  std::string path = "/";
+  std::function<void(std::string, std::string)> file_cb;
+}
+
+void DirIndex::set_file_cb(std::function<void(std::string, std::string)> cb)
+{
+  file_cb = cb;
 }
 
 void DirIndex::search(std::string search_path, std::string directory)
@@ -76,7 +87,8 @@ void DirIndex::process_entity(struct dirent* entity)
 
 void DirIndex::process_file(std::string file)
 {
-    std::cout << "Process file     : " << file.c_str() << std::endl;
-    
-    //if you want to do something with the file add your code here
+  //  std::cout << "Process file     : " << file.c_str() << std::endl;
+  file_cb(path, file);
+  //if you want to do something with the file add your code here
 }
+#endif
