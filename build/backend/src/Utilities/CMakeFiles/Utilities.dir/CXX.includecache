@@ -15,6 +15,8 @@ sstream
 -
 glib.h
 -
+sqlite3.h
+-
 
 /home/tashrif/Development/jeff-launcher/backend/src/Utilities/util.cpp
 sstream
@@ -27,6 +29,10 @@ vector
 -
 Utilities/util.h
 -
+sqlite3.h
+-
+TargetConditionals.h
+/home/tashrif/Development/jeff-launcher/backend/src/Utilities/TargetConditionals.h
 
 /usr/include/glib-2.0/glib.h
 glib/galloca.h

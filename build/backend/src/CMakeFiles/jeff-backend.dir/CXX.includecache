@@ -21,6 +21,8 @@ sstream
 -
 glib.h
 -
+sqlite3.h
+-
 
 /home/tashrif/Development/jeff-launcher/backend/src/main.cpp
 iostream

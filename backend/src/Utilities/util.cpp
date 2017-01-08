@@ -3,20 +3,157 @@
 #include <string.h>
 #include <vector>
 #include <Utilities/util.h>
+#include <sqlite3.h>
+
+enum {
+  LINUX_PLAT,
+  MAC_PLAT
+};
 
 namespace {
   std::vector<std::string> subdir_locations;
   std::vector<std::string> file_locations;
   int total_files=0;
   int subdir_count=0;
+
+  int OS_TYPE;
+
+  bool db_initialized=false;
+  bool db_loaded=false;
+  bool db_opened=false;
+
+  std::string default_db_location;
+
+  sqlite3 *index_db;
+
+
 };
 
-void util::scan_dir(const char *dir_location){
+void util::set_os_plat()
+{
+#ifdef __APPLE__
+#include "TargetConditionals.h"
+#if TARGET_OS_MAC
+  OS_TYPE = MAC_PLAT;
+#else
+#   error "Unknown Apple platform"
+#endif
+#elif __linux__
+  // linux
+  OS_TYPE = LINUX_PLAT;
+#else
+#   error "Unknown compiler"
+#endif  
+}
+
+std::string util::get_home_dir()
+{
+  const char* home_dir = getenv("HOME");
+  return util::to_string(home_dir);
+}
+
+void util::create_dir(std::string dir_location)
+{
+  std::string dir_cmd = "mkdir -pv " + dir_location;
+#if defined(_WIN32)
+  _mkdir(dir_location.c_str());
+#else
+  system(dir_cmd.c_str());
+#endif
+}
+
+void util::initialize()
+{
+  util::set_os_plat();
+  util::create_dir(util::get_home_dir() + "/.jeff-launcher");
+  util::create_dir(util::get_home_dir() + "/.jeff-launcher/AppIcons");
+  util::create_dir(util::get_home_dir() + "/.jeff-launcher/DatabaseIndex");
+
+  default_db_location = util::get_home_dir() + "/.jeff-launcher/DatabaseIndex/index.db";
+
+  util::init_db();
+
+  if (OS_TYPE == MAC_PLAT) {
+    util::scan_dir("/Applications");
+  }
+  util::flush_to_db(index_db, default_db_location.c_str());
+}
+
+void util::init_db()
+{
+  if (db_initialized == false) {
+    db_initialized = true;
+    char *error_msg = 0;
+    int  ret_code;
+    std::string sql_stmt;
+
+    /* Open database */
+    ret_code = sqlite3_open_v2("", &index_db, SQLITE_OPEN_READWRITE, NULL); /**< By leaving the first parameter sqlite creates a temporary database which has comparable speeds to a full fledged in-memory database */
+    if( ret_code ){
+      fprintf(stderr, "Can't open database: %s\n", sqlite3_errmsg(index_db));
+    }else{
+      fprintf(stdout, "Opened database successfully\n");
+    }
+
+    sql_stmt = "CREATE TABLE `index` (" \
+      "`ID`	INTEGER PRIMARY KEY AUTOINCREMENT UNIQUE," \
+      "`icon_location`	TEXT," \
+      "`app_name`	TEXT," \
+      "`app_location`	TEXT" \
+      ");";
+
+    /* Execute SQL statement */
+    ret_code = sqlite3_exec(index_db, util::to_char(sql_stmt), generic_db_callback, 0, &error_msg);
+    if( ret_code != SQLITE_OK ){
+      if (util::has_text(error_msg, "already exists") == false) // omits the already exists error msg
+        fprintf(stderr, "SQL error: %s\n", error_msg);
+      sqlite3_free(error_msg);
+    }else{
+      fprintf(stdout, "Table created successfully\n");
+    }
+  }
+}
+
+void util::load_db()
+{
+  if (db_loaded == false) {
+    int ret_code;
+    sqlite3 *in_memory = index_db;
+    sqlite3 *source_file;           /* Database connection opened on default_db_location.c_str() */
+    sqlite3_backup *backup_obj;  /* Backup object used to copy data */
+    sqlite3 *destination;             /* Database to copy to (source_file or in_memory) */
+    sqlite3 *source;           /* Database to copy from (source_file or in_memory) */
+
+    /* Open the database file identified by default_db_location.c_str(). Exit early if this fails
+    ** for any reason. */
+    ret_code = sqlite3_open(default_db_location.c_str(), &source_file);
+    if( ret_code==SQLITE_OK ){
+
+      source = source_file;
+      destination   = in_memory;
+
+      backup_obj = sqlite3_backup_init(destination, "main", source, "main");
+      if( backup_obj ){
+        (void)sqlite3_backup_step(backup_obj, -1);
+        (void)sqlite3_backup_finish(backup_obj);
+      }
+      ret_code = sqlite3_errcode(destination);
+    }
+
+    /* Close the database connection opened on database file default_db_location.c_str()
+    ** and return the result of this function. */
+    (void)sqlite3_close(source_file);
+
+    db_loaded = true;
+  }
+}
+
+void util::scan_dir(const char *dir_location) {
 
   subdir_locations.push_back(dir_location);
 
-  for (size_t subdir_iter = 0; subdir_iter < subdir_locations.size(); subdir_iter++){
-    std::string file_location = subdir_locations[subdir_iter];
+
+  std::string file_location = dir_location; //ubdir_locations[subdir_iter];
     if (file_location.substr(file_location.length() - 1) != "/")
       file_location += "/";
 
@@ -25,7 +162,7 @@ void util::scan_dir(const char *dir_location){
 
     std::stringstream test;
     const char *file;
-    GDir *dir = g_dir_open(subdir_locations[subdir_iter].c_str(), 0, &error);
+    GDir *dir = g_dir_open(dir_location, 0, &error); //(subdir_locations[subdir_iter].c_str(), 0, &error);
 
     while ((file = g_dir_read_name(dir))){
       try {
@@ -36,6 +173,7 @@ void util::scan_dir(const char *dir_location){
         if (subdir_error == NULL) {
           subdir_count++;
           subdir_locations.push_back(util::to_char(subdir_location));
+          std::cout << "Plist -> " << subdir_location << "/Contents/Info.plist"<< std::endl;
         }
         if (subdir_error != NULL){
           throw 0;
@@ -43,21 +181,49 @@ void util::scan_dir(const char *dir_location){
       }
       catch (int exception)
         {
-          std::string temp = file_location;
-          file_location += file;
-          std::cout << "File loc -> " << file_location << std::endl;
-
-          // check file format here
-          total_files++;
-          file_locations.push_back(file_location);
-
-          file_location = temp;
         }
     }
-  }
+  
   std::cout << "No. of Files : " << total_files << std::endl;
   std::cout << "No. of Subdirectories : " << subdir_count << std::endl;
   //sqlite3 *library_db = library_db;
+}
+
+int util::generic_db_callback(void *data, int total_col_num, char **value, char **fields)
+{
+  for(int iter = 0; iter < total_col_num; iter++){
+    printf("%s = %s\n", fields[iter], value[iter] ? value[iter] : "NULL");
+  }
+  printf("\n");
+  return 0;
+}
+
+int util::flush_to_db(sqlite3 *in_memory, const char *file_name) {
+  int ret_code;
+  sqlite3 *destination_file;           // Database connection opened on file_name
+  sqlite3_backup *backup_obj;  // Backup object used to copy data
+  sqlite3 *destination;             // Database to copy to (destination_file or in_memory)
+  sqlite3 *source;           // Database to copy from (destination_file or in_memory)
+
+  ret_code = sqlite3_open(file_name, &destination_file);
+  if( ret_code==SQLITE_OK ){
+
+    source = in_memory;
+    destination   = destination_file;
+
+    backup_obj = sqlite3_backup_init(destination, "main", source, "main");
+    if( backup_obj ){
+      (void)sqlite3_backup_step(backup_obj, -1);
+      (void)sqlite3_backup_finish(backup_obj);
+    }
+    ret_code = sqlite3_errcode(destination);
+  }
+
+  /* Close the database connection opened on database file file_name
+  ** and return the result of this function. */
+  db_opened = true;
+  (void)sqlite3_close(destination_file);
+  return ret_code;
 }
 
 std::string util::replace(std::string text, std::string find_value, std::string replace_value)
