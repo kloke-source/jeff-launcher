@@ -31,6 +31,16 @@ Utilities/util.h
 -
 sqlite3.h
 -
+fstream
+-
+sys/mman.h
+-
+sys/stat.h
+-
+fcntl.h
+-
+unistd.h
+-
 TargetConditionals.h
 /home/tashrif/Development/jeff-launcher/backend/src/Utilities/TargetConditionals.h
 

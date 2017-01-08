@@ -1,10 +1,10 @@
+#include <algorithm>
 #include <iostream>
+#include <cstring>
 #include <sstream>
-#include <Utilities/btree.h>
 #include <Utilities/util.h>
 
 int main(int argc, char *argv[])
 {
-  util::initialize();
-
+  util::scan_dir("/Applications/");
 }

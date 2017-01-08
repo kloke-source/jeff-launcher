@@ -4,6 +4,11 @@
 #include <vector>
 #include <Utilities/util.h>
 #include <sqlite3.h>
+#include <fstream>
+#include <sys/mman.h>
+#include <sys/stat.h>
+#include <fcntl.h>
+#include <unistd.h>
 
 enum {
   LINUX_PLAT,
@@ -78,6 +83,42 @@ void util::initialize()
   }
   util::flush_to_db(index_db, default_db_location.c_str());
 }
+
+void util::handle_error(const char* msg)
+{
+  perror(msg); 
+  exit(255);
+}
+
+std::string util::get_plist_property(std::string plist_prop, std::string plist_loc)
+{
+  std::ifstream file_input;
+  int offset;
+  std::string line;
+  unsigned int cur_line = 0;
+  bool prop_found = false;
+
+  file_input.open(plist_loc.c_str());
+  if(file_input.is_open()) {
+  while(getline(file_input, line)) { // I changed this, see below
+    cur_line++;
+
+    if (prop_found == true) {
+      std::string found_prop = line;
+      found_prop = util::replace(found_prop, " ", "");
+      found_prop = util::trim_from_beg(found_prop, "<string>");
+      found_prop = util::trim_from_end(found_prop, "</string>");
+      return found_prop;
+    }
+
+    if (util::has_text(line, plist_prop)) {
+      prop_found = true;
+    }
+  }
+  file_input.close();
+  }
+}
+
 
 void util::init_db()
 {
@@ -173,10 +214,23 @@ void util::scan_dir(const char *dir_location) {
         if (subdir_error == NULL) {
           subdir_count++;
           subdir_locations.push_back(util::to_char(subdir_location));
-          std::cout << "Plist -> " << subdir_location << "/Contents/Info.plist"<< std::endl;
+
+          if (OS_TYPE = MAC_PLAT)
+            {
+              std::cout << "Plist -> " << subdir_location << "/Contents/Info.plist"<< std::endl;              
+              std::string plist_loc = subdir_location + "/Contents/Info.plist";
+              std::string exec_name = util::get_plist_property("CFBundleExecutable", plist_loc);
+              std::string icon_name = util::get_plist_property("CFBundleIconFile", plist_loc);
+              std::string raw_icon_name = util::trim_from_end(icon_name, ".icns");
+              std::string icon_loc = subdir_location + "/Contents/Resources/" + icon_name;
+
+              std::string icns_conv_cmd = "sips -s format png " + icon_loc + " --out " + util::get_home_dir() + "/AppIcons/" + raw_icon_name + ".png";
+              system(icns_conv_cmd.c_str());
+            }
         }
         if (subdir_error != NULL){
           throw 0;
+          // Not a directory
         }
       }
       catch (int exception)
@@ -224,6 +278,18 @@ int util::flush_to_db(sqlite3 *in_memory, const char *file_name) {
   db_opened = true;
   (void)sqlite3_close(destination_file);
   return ret_code;
+}
+
+std::string util::trim_from_beg(std::string text, std::string trim_param)
+{
+  std::string trimmed_text = text.substr(trim_param.size(), text.size());
+  return trimmed_text;
+}
+
+std::string util::trim_from_end(std::string text, std::string trim_param)
+{
+  std::string trimmed_text = text.substr(0, text.size() - trim_param.size());
+  return trimmed_text;
 }
 
 std::string util::replace(std::string text, std::string find_value, std::string replace_value)

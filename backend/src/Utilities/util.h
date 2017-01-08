@@ -9,6 +9,8 @@
 
 class util{
  public:
+  static std::string trim_from_beg(std::string text, std::string trim_param);
+  static std::string trim_from_end(std::string text, std::string trim_param);
   static std::string replace(std::string text, std::string find_value, std::string replace_value);
   static std::string escape_string(std::string text);
   static std::string escape_spaces(std::string text);
@@ -27,13 +29,15 @@ class util{
   }
 
   static void initialize();
+  static std::string get_plist_property(std::string search_param, std::string txt_file_loc);
+  static void scan_dir(const char *dir_location);
  private:
+  static void handle_error(const char* msg);
   static void set_os_plat();
   static std::string get_home_dir();
   static void create_dir(std::string dir_location);
   static void init_db();
   static void load_db();
-  static void scan_dir(const char *dir_location);
   static int generic_db_callback(void *data, int total_col_num, char **value, char **fields);
   static int  flush_to_db(sqlite3 *in_memory, const char *file_name);
 };
