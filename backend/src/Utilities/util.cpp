@@ -173,7 +173,7 @@ void util::scan_dir(const char *dir_location) {
         if (subdir_error == NULL) {
           subdir_count++;
           subdir_locations.push_back(util::to_char(subdir_location));
-          std::cout << "Plist -> " << subdir_location << "/Contents/info.plist"<< std::endl;
+          std::cout << "Plist -> " << subdir_location << "/Contents/Info.plist"<< std::endl;
         }
         if (subdir_error != NULL){
           throw 0;
