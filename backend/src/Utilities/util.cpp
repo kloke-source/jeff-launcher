@@ -100,22 +100,22 @@ std::string util::get_plist_property(std::string plist_prop, std::string plist_l
 
   file_input.open(plist_loc.c_str());
   if(file_input.is_open()) {
-  while(getline(file_input, line)) { // I changed this, see below
-    cur_line++;
+    while(getline(file_input, line)) { // I changed this, see below
+      cur_line++;
 
-    if (prop_found == true) {
-      std::string found_prop = line;
-      found_prop = util::replace(found_prop, " ", "");
-      found_prop = util::trim_from_beg(found_prop, "<string>");
-      found_prop = util::trim_from_end(found_prop, "</string>");
-      return found_prop;
-    }
+      if (prop_found == true) {
+        std::string found_prop = line;
+        found_prop = util::replace(found_prop, " ", "");
+        found_prop = util::trim_from_beg(found_prop, "<string>");
+        found_prop = util::trim_from_end(found_prop, "</string>");
+        return found_prop;
+      }
 
-    if (util::has_text(line, plist_prop)) {
-      prop_found = true;
+      if (util::has_text(line, plist_prop)) {
+        prop_found = true;
+      }
     }
-  }
-  file_input.close();
+    file_input.close();
   }
   return "prop_not_found";
 }
@@ -192,7 +192,7 @@ void util::load_db()
 
 std::string look_in_dir(const char *dir_to_look, std::string look_for)
 {
-return "";
+  return "";
 }
 
 void util::scan_dir(const char *dir_location) {
@@ -201,54 +201,52 @@ void util::scan_dir(const char *dir_location) {
 
 
   std::string file_location = dir_location; //ubdir_locations[subdir_iter];
-    if (file_location.substr(file_location.length() - 1) != "/")
-      file_location += "/";
+  if (file_location.substr(file_location.length() - 1) != "/")
+    file_location += "/";
 
-    GError *error = NULL;
-    GError *subdir_error = NULL;
+  GError *error = NULL;
+  GError *subdir_error = NULL;
 
-    std::stringstream test;
-    const char *file;
-    GDir *dir = g_dir_open(dir_location, 0, &error); //(subdir_locations[subdir_iter].c_str(), 0, &error);
+  std::stringstream test;
+  const char *file;
+  GDir *dir = g_dir_open(dir_location, 0, &error); //(subdir_locations[subdir_iter].c_str(), 0, &error);
 
-    while ((file = g_dir_read_name(dir))){
-      try {
-        GError *subdir_error = NULL;
+  while ((file = g_dir_read_name(dir))){
+    try {
+      GError *subdir_error = NULL;
 
-        std::string subdir_location = file_location + file;
-        g_dir_open(util::to_char(subdir_location), 0, &subdir_error);
-        if (subdir_error == NULL) {
-          subdir_count++;
-          subdir_locations.push_back(util::to_char(subdir_location));
+      std::string subdir_location = file_location + file;
+      g_dir_open(util::to_char(subdir_location), 0, &subdir_error);
+      if (subdir_error == NULL) {
+        subdir_count++;
+        subdir_locations.push_back(util::to_char(subdir_location));
 
-          if (OS_TYPE == MAC_PLAT)
-            {
+        if (OS_TYPE == MAC_PLAT)
+          {
 
-              std::cout << "Plist -> " << subdir_location << "/Contents/Info.plist"<< std::endl;
-              std::string plist_loc = subdir_location + "/Contents/Info.plist";
+            std::cout << "Plist -> " << subdir_location << "/Contents/Info.plist"<< std::endl;
+            std::string plist_loc = subdir_location + "/Contents/Info.plist";
 
-              if (util::file_exists(plist_loc)) {
+            if (util::file_exists(plist_loc)) {
               std::string exec_name = util::get_plist_property("CFBundleExecutable", plist_loc);
               std::string icon_name = util::get_plist_property("CFBundleIconFile", plist_loc);
               std::string raw_icon_name = util::trim_from_end(icon_name, ".icns");
               std::string icon_loc = subdir_location + "/Contents/Resources/" + icon_name;
+              if (util::file_exists(icon_loc)) {
+                std::cout << "File icon exists -> " << icon_loc << std::endl;
+              }
             }
-              /*
-              std::cout <<  "Icns -> " << icon_name << std::endl;//= "sips -s format png " + icon_loc + " --out " + util::get_home_dir() + "/AppIcons/" + raw_icon_name + ".png";
-              //              std::cout << icns_conv_cmd << std::endl;
-              //system(icns_conv_cmd.c_str());
-              */
-            }
-        }
-        if (subdir_error != NULL){
-          throw 0;
-          // Not a directory
-        }
+          }
       }
-      catch (int exception)
-        {
-        }
+      if (subdir_error != NULL){
+        throw 0;
+        // Not a directory
+      }
     }
+    catch (int exception)
+      {
+      }
+  }
 
   std::cout << "No. of Files : " << total_files << std::endl;
   std::cout << "No. of Subdirectories : " << subdir_count << std::endl;
@@ -336,12 +334,12 @@ std::string util::escape_slashes(std::string text)
 
 bool util::file_exists(std::string file_name)
 {
-    struct stat buf;
-    if (stat(file_name.c_str(), &buf) != -1)
+  struct stat buf;
+  if (stat(file_name.c_str(), &buf) != -1)
     {
-        return true;
+      return true;
     }
-    return false;
+  return false;
 }
 bool util::has_text(std::string base_string, std::string search_value)
 {
