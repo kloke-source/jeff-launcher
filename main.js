@@ -1,9 +1,13 @@
 const {electron, app, BrowserWindow, globalShortcut, dialog} = require('electron')
+const contents = require('electron').webContents
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
 let back
 let searchBar
+let miniBrowser
+let miniPlayer
+let dancer
 
 function createWindow () {
   // Create the browser window.
@@ -13,26 +17,50 @@ function createWindow () {
     height: 60,
     show:false,
     frame: false,
+    parent: back,
+    backgroundColor: "#212121"
+  })
+  miniBrowser = new BrowserWindow({
+    width: 1000,
+    height: 750,
+    show: false,
+    frame: false,
+    parent: searchBar
+  })
+  miniPlayer = new BrowserWindow({
+    width: 640,
+    height: 380,
+    x: 50,
+    y: 50,
+    alwaysOnTop: true,
+    show: false,
+    frame: false,
     parent: back
   })
-
-  // and load the index.html of the background window.
-  back.loadURL(`file://${__dirname}/index.html`)
-  searchBar.loadURL(`file://${__dirname}/searchbar.html`)
+  dancer = new BrowserWindow({
+    width: 400,
+    height: 100,
+    transparent: true,
+    show: false
+  })
 
   // Open the DevTools.
-  searchBar.webContents.openDevTools()
+  //searchBar.webContents.openDevTools()
+  miniPlayer.webContents.openDevTools()
+  dancer.webContents.openDevTools()
+  // miniBrowser.webContents.openDevTools()
   // back.webContents.openDevTools()
 
   // Emitted when the window is closed.
-  back.on('closed', () => {
-    // Dereference the window object, usually you would store windows
-    // in an array if your app supports multi windows, this is the time
-    // when you should delete the corresponding element.
-    back = null
+  back.on('closed', () => { back = null })
+  searchBar.on('closed', () => { searchBar = null })
+  miniBrowser.on('closed', () => { miniBrowser = null })
+  miniPlayer.on('closed', () => {
+    miniPlayer = null
+    miniBrowser.show();
+
   })
 }
-
 // This method will be called when Electron has finished
 // initialization and is ready to create browser windows.
 // Some APIs can only be used after this event occurs.
@@ -55,11 +83,37 @@ app.on('ready', function () {
   globalShortcut.register('CommandOrControl+Shift+Space', function () {
     searchBarToggle(searchBarShow)
     searchBarShow = !searchBarShow
+  })
+  globalShortcut.register('CmdOrCtrl+Q', function () {
+    app.quit()
+  })
     const electronScreen = require('electron').screen
     const size = electronScreen.getPrimaryDisplay().size
-    back.setPosition((size.width/2)-400, (size.height/2)-525, false)
-  })
+    var winWidth = parseInt((size.width)*0.55)
+    back.setSize(winWidth, 60, false)
+    back.setPosition((size.width/2) - winWidth/2, 0, false)
+    back.loadURL(`file://${__dirname}/index.html`)
+    searchBar.loadURL(`file://${__dirname}/searchbar.html`)
+    miniBrowser.loadURL(`file://${__dirname}/index.html`)
 })
+
+youtube = false;
+
+setInterval (function () {
+  if (!youtube) {
+    miniContents = contents.fromId(3)
+    siteURL = miniContents.getURL()
+    if (siteURL.indexOf('youtube.com/watch?') !== -1) {
+      videoId = siteURL.slice(siteURL.indexOf("v=") + 2)
+      miniPlayer.show()
+      miniPlayer.loadURL(`file://${__dirname}/youtubeplayer.html`)
+      youtube = true;
+      webcont = contents.fromId(3)
+      webcont.setAudioMuted(true)
+      miniBrowser.hide()
+    }
+  }
+}, 1000)
 
 // Quit when all windows are closed.
 app.on('window-all-closed', () => {

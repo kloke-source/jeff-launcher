@@ -1,0 +1,18 @@
+<html>
+<link rel="stylesheet" type="text/css"
+  href="css/searchbar.css"/>
+  <body id="box">
+    <script>
+      contents = require('electron').remote.webContents;
+      remote = require('electron').remote.BrowserWindow;
+      win = remote.fromId(3);
+      content = contents.fromId(3);
+      siteURL = content.getURL();
+      VideoID = siteURL.slice(siteURL.indexOf("v=") + 2);
+      iframeSpot = document.getElementById("box");
+      iframeSpot.innerHTML = '<iframe width="640" height="380" id="player" src="https://www.youtube.com/embed/'+VideoID+'?autoplay=1"></iframe>'
+      console.log(siteURL);
+      console.log(VideoID);
+    </script>
+  </body>
+</html>

@@ -1,22 +1,19 @@
 <!DOCTYPE html>
 <html>
   <head>
-
     <link rel="stylesheet" type="text/css"
       href="https://fonts.googleapis.com/css?family=Open+Sans"/>
-<<<<<<< HEAD
+    <link rel="stylesheet" type="text/css"
+      href="css/searchbar.css"/>
+    <script type="text/javascript" src="jquery.js"></script>
   </head>
   <style>
     @import url('css/searchbar.css');
   </style>
-    <div class="searchBarDiv">
+    <div class="searchBarDiv" id='searchBarDiv'>
       <textarea id="searchText" autofocus="autofocus" rows="1" cols="40" placeholder="What would you like to find?" oninput="fillTable()" ></textarea>
     </div>
     <div class="resultArea">
-
-
-
-
     </div>
 
     <table class="table_1" id="resultTable">
@@ -26,13 +23,13 @@
     <script>
     function getApps() {
       var x = document.getElementById("searchText").value;
-      var f = '<img src="character.png" alt="character" height="22" width="22">'
+      var f = '<img src="/resources/magGlass.png" alt="image" height="22" width="22">'
       document.getElementById("demo").innerHTML = f;
       document.getElementById("resultTable").style.visibility = "visible";
 
     }
     function add_row(imgLoc, appName){
-      var f = '<img src="' + imgLoc + '" alt="character" height="42" width="42">'
+      var f = '<img src="' + imgLoc + '" alt="character" height="30" width="30">'
       var table = document.getElementById("resultTable");
       var row = table.insertRow(0);
       var cell1 = row.insertCell(0);
@@ -40,39 +37,51 @@
       cell1.innerHTML = f;
       cell2.innerHTML = appName;
     }
-    var data = ["BLAH","BLAH","BLAH","BLAH","BLAH"]
+    var data = [];
     function fillTable() {
-      /*var table = document.getElementById("resultTable");
-      for (int i = table.rows.length; i > 0; i--) {
-        table.deleteRow(i);
-      }*/
-      document.getElementById("resultTable").style.visibility = "visible";
-      for (i=0; i<data.length; i++) {
-        add_row("character.png", data[i]);
+      var Table = document.getElementById("resultTable");
+      Table.style.visibility = "visible";
+      Table.innerHTML = '';
+      for (i=data.length - 1; i>=0; i--) {
+        add_row("resources/magGlass.png", data[i]);
       }
+    var remote = require('electron').remote.BrowserWindow;
+    var win = remote.getFocusedWindow();
+    var h1 = document.getElementById("searchBarDiv").clientHeight;
+    var h2 = document.getElementById("resultTable").clientHeight;
+    win.setSize(800, (h1 + h2), false);
+    query();
     }
-
-
-
     </script>
-
-
-=======
-    <link rel="stylesheet" type="text/css"
-      href="css/searchbar.css"/>
-  </head>
-  <body>
     <script>
+    function query () {
+      var globalShortcut = require('electron').remote.globalShortcut;
+      var rem = require('electron').remote.BrowserWindow;
+      var request = require('request');
+      globalShortcut.register("CmdOrCtrl+Enter", function() {
+        var query = document.getElementById('searchText').value;
+        if (query.indexOf('music')){
+          win = rem.fromId(5);
+          win.show();
+          win.loadURL(`file://${__dirname}/musicplayer.html`);
+        }
+        else {
+          query = query.replace(' ','+');
+          console.log(query);
+          win = rem.fromId(3);
+          win.show();
+          win.loadURL("https://www.google.ca/webhp?hl=en&sa=X&ved=0ahUKEwjb6rXWq7LRAhUG1oMKHSt7CUMQPAgD#hl=en&q="+query);
+        }
+      });
+    }
+    </script>
+    <script>
+    /*
     var shell = require('shelljs');
     var output = shell.exec('ls -a ~',{async:true}, (error, stdout, stderr) => {
     console.log(`stdout: ${stdout}`);
     console.log(`stderr: ${stderr}`);
     });
+    */
     </script>
-    <input type="text" autofocus="autofocus" rows="1" cols="100" placeholder="What would you like to find?">
-    </input>
-    <div class="resultArea">
-    </div>
-  </body>
->>>>>>> origin/master
 </html>
