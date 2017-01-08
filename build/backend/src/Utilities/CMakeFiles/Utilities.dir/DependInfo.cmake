@@ -4,14 +4,16 @@ set(CMAKE_DEPENDS_LANGUAGES
   )
 # The set of files for implicit dependencies of each language:
 set(CMAKE_DEPENDS_CHECK_CXX
-  "/home/tashrif/Development/jeff-launcher/backend/src/Utilities/util.cpp" "/home/tashrif/Development/jeff-launcher/build/backend/src/Utilities/CMakeFiles/Utilities.dir/util.cpp.o"
+  "/Users/WilliamSinclair/Documents/dev/jeff-launcher/backend/src/Utilities/util.cpp" "/Users/WilliamSinclair/Documents/dev/jeff-launcher/build/backend/src/Utilities/CMakeFiles/Utilities.dir/util.cpp.o"
   )
 set(CMAKE_CXX_COMPILER_ID "GNU")
 
 # The include file search paths:
 set(CMAKE_CXX_TARGET_INCLUDE_PATH
-  "/usr/include/glib-2.0"
-  "/usr/lib/glib-2.0/include"
+  "/usr/local/Cellar/glib/2.50.2/include/glib-2.0"
+  "/usr/local/Cellar/glib/2.50.2/lib/glib-2.0/include"
+  "/usr/local/opt/gettext/include"
+  "/usr/local/Cellar/pcre/8.39/include"
   "../backend/src"
   )
 

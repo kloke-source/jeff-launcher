@@ -48,7 +48,7 @@ void util::set_os_plat()
   OS_TYPE = LINUX_PLAT;
 #else
 #   error "Unknown compiler"
-#endif  
+#endif
 }
 
 std::string util::get_home_dir()
@@ -86,7 +86,7 @@ void util::initialize()
 
 void util::handle_error(const char* msg)
 {
-  perror(msg); 
+  perror(msg);
   exit(255);
 }
 
@@ -117,6 +117,7 @@ std::string util::get_plist_property(std::string plist_prop, std::string plist_l
   }
   file_input.close();
   }
+  return "prop_not_found";
 }
 
 
@@ -191,8 +192,9 @@ void util::load_db()
 
 std::string look_in_dir(const char *dir_to_look, std::string look_for)
 {
-  
+return "";
 }
+
 void util::scan_dir(const char *dir_location) {
 
   subdir_locations.push_back(dir_location);
@@ -221,16 +223,21 @@ void util::scan_dir(const char *dir_location) {
 
           if (OS_TYPE == MAC_PLAT)
             {
-              std::cout << "Plist -> " << subdir_location << "/Contents/Info.plist"<< std::endl;              
+
+              std::cout << "Plist -> " << subdir_location << "/Contents/Info.plist"<< std::endl;
               std::string plist_loc = subdir_location + "/Contents/Info.plist";
+
+              if (util::file_exists(plist_loc)) {
               std::string exec_name = util::get_plist_property("CFBundleExecutable", plist_loc);
               std::string icon_name = util::get_plist_property("CFBundleIconFile", plist_loc);
               std::string raw_icon_name = util::trim_from_end(icon_name, ".icns");
               std::string icon_loc = subdir_location + "/Contents/Resources/" + icon_name;
-
+            }
+              /*
               std::cout <<  "Icns -> " << icon_name << std::endl;//= "sips -s format png " + icon_loc + " --out " + util::get_home_dir() + "/AppIcons/" + raw_icon_name + ".png";
               //              std::cout << icns_conv_cmd << std::endl;
               //system(icns_conv_cmd.c_str());
+              */
             }
         }
         if (subdir_error != NULL){
@@ -242,7 +249,7 @@ void util::scan_dir(const char *dir_location) {
         {
         }
     }
-  
+
   std::cout << "No. of Files : " << total_files << std::endl;
   std::cout << "No. of Subdirectories : " << subdir_count << std::endl;
   //sqlite3 *library_db = library_db;
@@ -327,6 +334,15 @@ std::string util::escape_slashes(std::string text)
   return text;
 }
 
+bool util::file_exists(std::string file_name)
+{
+    struct stat buf;
+    if (stat(file_name.c_str(), &buf) != -1)
+    {
+        return true;
+    }
+    return false;
+}
 bool util::has_text(std::string base_string, std::string search_value)
 {
   if (base_string.find(search_value) != std::string::npos)
@@ -355,4 +371,3 @@ int util::to_int(std::string text)
   int value = atoi(text.c_str());
   return value;
 }
-

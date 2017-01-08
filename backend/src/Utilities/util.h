@@ -16,6 +16,7 @@ class util{
   static std::string escape_spaces(std::string text);
   static std::string escape_slashes(std::string text);
 
+  static bool file_exists(std::string file_name);
   static bool has_text(std::string base_string, std::string search_value);
   static bool check_file_format(std::string file, std::string file_format);
   static char *to_char(std::string string_value);
