@@ -34,7 +34,7 @@ void DirIndex::search(std::string search_path, std::string directory)
 void DirIndex::process_directory(std::string directory)
 {
     std::string dir_to_open = path + directory;
-    auto dir = opendir(dir_to_open.c_str());
+    DIR* dir = opendir(dir_to_open.c_str());
 
     //set the new path for the content of the directory
     path = dir_to_open + "/";
@@ -47,7 +47,7 @@ void DirIndex::process_directory(std::string directory)
         return;
     }
 
-    auto entity = readdir(dir);
+    dirent* entity = readdir(dir);
 
     while(entity != NULL)
     {
