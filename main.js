@@ -10,7 +10,7 @@ function createWindow () {
   back = new BrowserWindow({show: false})
   searchBar = new BrowserWindow({
     width: 800,
-    height: 50,
+    height: 60,
     show:false,
     frame: false,
     parent: back
@@ -55,6 +55,9 @@ app.on('ready', function () {
   globalShortcut.register('CommandOrControl+Shift+Space', function () {
     searchBarToggle(searchBarShow)
     searchBarShow = !searchBarShow
+    const electronScreen = require('electron').screen
+    const size = electronScreen.getPrimaryDisplay().size
+    back.setPosition((size.width/2)-400, (size.height/2)-525, false)
   })
 })
 
