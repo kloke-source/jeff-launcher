@@ -215,7 +215,7 @@ void util::scan_dir(const char *dir_location) {
           subdir_count++;
           subdir_locations.push_back(util::to_char(subdir_location));
 
-          if (OS_TYPE = MAC_PLAT)
+          if (OS_TYPE == MAC_PLAT)
             {
               std::cout << "Plist -> " << subdir_location << "/Contents/Info.plist"<< std::endl;              
               std::string plist_loc = subdir_location + "/Contents/Info.plist";
