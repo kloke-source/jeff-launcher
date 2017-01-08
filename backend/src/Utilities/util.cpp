@@ -39,6 +39,11 @@ namespace {
 
 };
 
+int util::get_os_plat()
+{
+  return OS_TYPE;
+}
+
 void util::set_os_plat()
 {
 #ifdef __APPLE__
@@ -88,41 +93,12 @@ void util::initialize()
 
   util::init_db();
 
-  if (OS_TYPE == MAC_PLAT) {
-    /* index callback function */
-    std::function<void(std::string, std::string)> index_cb;
-
-    btree<std::string> app_indexed_plists;
-    index_cb = [&app_indexed_plists](std::string dir, std::string file_input) {
-      std::string file_loc = dir + file_input;
-
-      if (app_indexed_plists.check(dir) == false)
-        {
-      std::string plist_loc = dir + "/Contents/Info.plist";
-
-      if (util::file_exists(plist_loc)) {
-        std::string exec_name = util::get_plist_property("CFBundleExecutable", plist_loc);
-        std::string icon_name = util::get_plist_property("CFBundleIconFile", plist_loc);
-        std::string raw_icon_name = util::trim_from_end(icon_name, ".icns");
-
-        //std::cout << "Looking in Dir -> " << subdir_location << std::endl;
-        //std::cout << "Icon name -> " << icon_name << std::endl;
-        std::cout << "Dir -> " << dir << std::endl;
-        std::cout << "Icon name -> " << icon_name << std::endl;
-        //std::string icns_file_loc = util::look_in_dir(subdir_location.c_str(), icon_name);
-
-      }
-      app_indexed_plists.insert(dir);
-        }
-    };
-
-    DirIndex::set_file_cb(index_cb);
-    DirIndex::search("/", "Applications");
+  if (OS_TYPE == MAC_PLAT)
+  DirIndex::search("/", "Applications");
 
 
 
     util::flush_to_db(index_db, default_db_location.c_str());
-  }
 }
 
 std::string util::get_plist_property(std::string plist_prop, std::string plist_loc)
